@@ -10,6 +10,6 @@ public class Main {
         response.addCompliment(new Comment(123, "Argiro's food is so awful!!"));
         response.addCompliment(new Comment(124, "Why lecture class's screen being so dark!!"));
         System.out.println("Post: " + post.getName());
-        System.out.println(post.getFeedback().getCompliments().toString());
+        System.out.println("Feedback: " + post.getFeedback().getCompliments().toString());
     }
 }
