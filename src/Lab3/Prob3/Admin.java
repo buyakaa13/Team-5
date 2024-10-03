@@ -1,4 +1,4 @@
-package lesson3.labs.prob3;
+package Lab3.Prob3;
 
 import java.util.List;
 
