@@ -1,4 +1,4 @@
-package Prob2B;
+package Lab2.Prob2B;
 
 public class OrderLine {
     private int orderLineNumber;
