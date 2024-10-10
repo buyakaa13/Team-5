@@ -32,12 +32,12 @@ public class Problem1 {
             action.accept(number + number);
         }
 	}
-	public static void transformStrings(List<String> list, Function transformer/*,Functional Interface transformer */) {
+	public static void transformStrings(List<String> list, Function transformer) {
         for (String s : list) {
             System.out.println(transformer.apply(s.toUpperCase()));
         }
     }
-	public static void printIf(List<Integer> numbers, IntPredicate condition/*, transformer condition*/) {
+	public static void printIf(List<Integer> numbers, IntPredicate condition) {
         for (Integer number : numbers) {
            if (condition.test(number)) {
                 System.out.println(number);
