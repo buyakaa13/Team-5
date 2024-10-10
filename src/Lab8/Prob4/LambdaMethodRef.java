@@ -1,4 +1,4 @@
-package Lab8.Prob1;
+package Lab8.Prob4;
 
 import java.util.Arrays;
 import java.util.Comparator;

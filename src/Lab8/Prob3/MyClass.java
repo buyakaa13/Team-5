@@ -1,4 +1,4 @@
-package Lab8.Prob1;
+package Lab8.Prob3;
 
 import java.util.function.BiFunction;
 
