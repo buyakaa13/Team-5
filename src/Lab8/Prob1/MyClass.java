@@ -1,5 +1,7 @@
 package Lab8.Prob1;
 
+import java.util.function.BiFunction;
+
 public class MyClass {
 	int x;
 	String y;
@@ -12,8 +14,12 @@ public class MyClass {
 	// testing method to check the equality using Lambda and Method reference
 	public void myMethod(MyClass cl) {
 		// Implement
-		
-		
+		BiFunction<MyClass, MyClass, Boolean> lambda = (x,y)-> x.equals(y);
+		System.out.println("Equals: " + lambda.apply(this, cl));
+
+		System.out.println("Method reference way -----------");
+		BiFunction<MyClass, MyClass, Boolean> lambda1 = MyClass::equals;
+		System.out.println("Equals: " + lambda1.apply(this, cl));
 	}
 
 	@Override
