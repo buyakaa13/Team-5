@@ -1,4 +1,7 @@
-package Lab8.Prob1;
+package Lab8.Prob3;
+
+import java.util.Objects;
+import java.util.function.Predicate;
 
 public class MyClass {
 	int x;
@@ -12,7 +15,16 @@ public class MyClass {
 	// testing method to check the equality using Lambda and Method reference
 	public void myMethod(MyClass cl) {
 		// Implement
-		
+		System.out.println(this.equals(cl));
+
+		//lambda implementation using functional reference
+		Predicate<MyClass> myLambda = c -> this.equals(c);
+
+		//method reference implementation
+		Predicate<MyClass> myMethodCl = this::equals;
+
+		System.out.println(myLambda.test(cl) + " lambda");
+		System.out.println(myMethodCl.test(cl) + " method");
 		
 	}
 
