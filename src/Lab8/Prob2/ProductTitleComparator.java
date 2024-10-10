@@ -1,7 +1,6 @@
 package Lab8.Prob2;
 
 import java.util.Comparator;
-import java.util.Comparator;
 
 public class ProductTitleComparator implements Comparator<Product> {
     @Override
