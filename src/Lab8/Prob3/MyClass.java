@@ -18,7 +18,7 @@ public class MyClass {
 		System.out.println(this.equals(cl));
 
 		//lambda implementation using functional reference
-		Predicate<MyClass> myLambda = c -> this.equals(c);
+		Predicate<MyClass> myLambda = c -> c.equals(this);
 
 		//method reference implementation
 		Predicate<MyClass> myMethodCl = this::equals;
