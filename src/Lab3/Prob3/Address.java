@@ -1,6 +1,5 @@
 package Lab3.Prob3;
 
-
 public class Address {
 	private String street;
 	private String city;
