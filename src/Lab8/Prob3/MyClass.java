@@ -1,6 +1,5 @@
 package Lab8.Prob3;
 
-import java.util.function.BiFunction;
 import java.util.function.Predicate;
 
 public class MyClass {
