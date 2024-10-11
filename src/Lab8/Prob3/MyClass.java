@@ -1,6 +1,7 @@
 package Lab8.Prob3;
 
 import java.util.function.BiFunction;
+import java.util.function.Predicate;
 
 public class MyClass {
 	int x;
@@ -14,13 +15,13 @@ public class MyClass {
 	// testing method to check the equality using Lambda and Method reference
 	public void myMethod(MyClass cl) {
 		// Implement
+		Predicate<MyClass> lambdaStyle = (x)->x.equals(this);
+		Predicate<MyClass> methodReferenceStyle = this::equals;
 		System.out.println("Lambda way -------------------");
-		BiFunction<MyClass, MyClass, Boolean> lambda = (x,y)->x.equals(y);
-		System.out.println(lambda.apply(this, cl));
+		System.out.println(lambdaStyle.test(cl));
 
 		System.out.println("Method reference way -----------");
-		BiFunction<MyClass, MyClass, Boolean> lambda1 = MyClass::equals;
-		System.out.println(lambda1.apply(this, cl));
+		System.out.println(methodReferenceStyle.test(cl));
 		
 	}
 
