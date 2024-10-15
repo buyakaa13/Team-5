@@ -1,4 +1,6 @@
-package prob2;
+package Lab10.Prob2;
+
+import java.util.Objects;
 
 public class Account {
 	private int acctId;
@@ -15,5 +17,18 @@ public class Account {
 	public double getBalance() {
 		return balance;
 	}
-	 
+
+	@Override
+	public boolean equals(Object obj) {
+		if(obj == null) return false;
+		if(!(obj instanceof Account)) return false;
+		Account other = (Account) obj;
+		return acctId == other.acctId;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(acctId, balance);
+	}
+
 }
