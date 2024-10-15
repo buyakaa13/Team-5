@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
-import java.util.function.IntConsumer;
 import java.util.function.IntPredicate;
 
 public class Problem1 {
@@ -13,12 +12,12 @@ public class Problem1 {
 		// To understand functions as First class citizen
 		 List<Integer> numbers = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5));
 		 // Task 1: Identify the suitable interface to read the input and print doubled
-		 IntConsumer lambda = x-> System.out.println("Doubled num: " + x);
+		 Function<Integer, Integer> lambda = x-> x+x;
 		 changeDouble(numbers, lambda);// Output: 2 4 6 8 10
 	
 		 List<String> data = Arrays.asList("apple", "banana", "cherry");
 	     //Task 2: Take input of String and transform into Upper case
-		 Function<String, String> lambda1 = x-> x;
+		 Function<String, String> lambda1 = x-> x.toUpperCase();
 		 transformStrings(data, lambda1);
 		 
 		 // Task 3: Check the inputs of given value is divisible by 5.
@@ -27,14 +26,14 @@ public class Problem1 {
 		 printIf(inputs, lambda2);
 	}
 
-	public static void changeDouble(List<Integer> numbers, IntConsumer action) {
+	public static void changeDouble(List<Integer> numbers, Function action) {
         for (Integer number : numbers) {
-            action.accept(number + number);
+			System.out.println(action.apply(number));
         }
 	}
 	public static void transformStrings(List<String> list, Function transformer) {
         for (String s : list) {
-            System.out.println(transformer.apply(s.toUpperCase()));
+            System.out.println(transformer.apply(s));
         }
     }
 	public static void printIf(List<Integer> numbers, IntPredicate condition) {
