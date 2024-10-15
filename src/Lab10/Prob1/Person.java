@@ -1,4 +1,4 @@
-package lesson10.generics.labsolution.prob1;
+package Lab10.Prob1;
 
 public class Person implements Comparable<Person> {
     private String firstName;

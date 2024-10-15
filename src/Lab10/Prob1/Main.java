@@ -1,4 +1,4 @@
-package lesson10.generics.labsolution.prob1;
+package Lab10.Prob1;
 
 import java.util.*;
 
@@ -8,7 +8,7 @@ public class Main {
 
     public static void main(String[] args) {
         // Example usage with Integers
-     /*   List<Integer> sortedList1 = Arrays.asList(1, 3, 5, 7);
+        List<Integer> sortedList1 = Arrays.asList(1, 3, 5, 7);
         List<Integer> sortedList2 = Arrays.asList(2, 4, 6, 8);
 
         List<Integer> mergedIntegers = mergeSortedLists(sortedList1, sortedList2);
@@ -35,6 +35,15 @@ public class Main {
         );
         // Merging and sorting the lists
         List<Person> mergedPersons = mergeSortedLists(sortedPersonList1, sortedPersonList2);
-        System.out.println("Merged sorted persons: " + mergedPersons);*/
+        System.out.println("Merged sorted persons: " + mergedPersons);
+
+    }
+
+    public static <T extends Comparable<T>> List<T> mergeSortedLists(List<T> list, List<T> listOne) {
+       List<T> tempList = new ArrayList<>();
+       tempList.addAll(list);
+       tempList.addAll(listOne);
+       Collections.sort(tempList);
+       return tempList;
     }
 }
