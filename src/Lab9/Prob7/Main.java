@@ -1,6 +1,7 @@
 package Lab9.Prob7;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Main {
 
@@ -16,14 +17,16 @@ public class Main {
 		                  new Employee("Donald", "Trump", 100000));
 		
 		//your stream pipeline here
-		list.stream()
-				.filter(x-> x.getSalary() > 100000 && Character.toLowerCase(x.getLastName().charAt(0)) > 'm')
+		String result = list.stream()
+				.filter(x-> x.getSalary() > 100000 && x.getLastName().toLowerCase().charAt(0) >= 'n')
 				.map(x->x.getFirstName() + " " + x.getLastName())
 				.sorted()
-				.forEach(System.out::println);
+				.collect(Collectors.joining(", "));
+
+		System.out.println(result);
 
 		//LambdaLibrary way ------------
-		List<String> employeeNames = LambdaLibrary.employeeName.apply(list, 100000, 'm');
+		String employeeNames = LambdaLibrary.employeeName.apply(list, 100000, 'n');
 		System.out.println(employeeNames);
 
 	}

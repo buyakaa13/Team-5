@@ -15,6 +15,10 @@ public class Prob1 {
 
     public int countWords(List<String> words, char c, char d, int len){
         long result = words.stream()
+                //these filter works aswell, just commented out to try another approach
+//                .filter(x -> x.length() == len)
+//                .filter(x->x.indexOf(c) !=-1)
+//                .filter(x-> x.indexOf(d) ==-1)
                 .filter(x->x.contains(String.valueOf(c)) && !x.contains(String.valueOf(d)) && x.length() == len)
                 .count();
 
