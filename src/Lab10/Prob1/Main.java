@@ -4,7 +4,6 @@ import java.util.*;
 
 public class Main {
     // Write Generic method to merge two sorted lists
-   
 
     public static void main(String[] args) {
         // Example usage with Integers
@@ -33,17 +32,17 @@ public class Main {
                 new Person("Bob", "Smith"),
                 new Person("Charlie", "Doe")
         );
+
         // Merging and sorting the lists
         List<Person> mergedPersons = mergeSortedLists(sortedPersonList1, sortedPersonList2);
         System.out.println("Merged sorted persons: " + mergedPersons);
-
     }
 
-    public static <T extends Comparable<T>> List<T> mergeSortedLists(List<T> list, List<T> listOne) {
-       List<T> tempList = new ArrayList<>();
-       tempList.addAll(list);
-       tempList.addAll(listOne);
-       Collections.sort(tempList);
-       return tempList;
+    public static <T extends Comparable<T>> List<T> mergeSortedLists(List<T> list1, List<T> list2){
+        List<T> tempList = new ArrayList<>();
+        tempList.addAll(list1);
+        tempList.addAll(list2);
+        Collections.sort(tempList);
+        return tempList;
     }
 }
