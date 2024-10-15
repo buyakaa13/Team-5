@@ -1,4 +1,6 @@
-package prob2;
+package Lab10.Prob2;
+
+import java.util.Objects;
 
 public class Employee extends Person {
 	int id;
@@ -38,7 +40,23 @@ public class Employee extends Person {
 	public void setSalary(int salary) {
 		this.salary = salary;
 	}
-	
-	
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Employee employee = (Employee) o;
+		if (id != employee.id) return false;
+		if (salary != employee.salary) return false;
+		return true;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, salary);
+	}
+
+
+
 }
 
