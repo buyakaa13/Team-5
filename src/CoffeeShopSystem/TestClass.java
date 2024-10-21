@@ -16,14 +16,21 @@ public class TestClass {
 
         // Manager managing employees and menu items
         manager.manageEmployee(employeeManager);
-        manager.manageMenuItems(menuManager);
         manager.deleteEmployee(employeeManager, "E002");
+
+        MenuItem itemOne = new MenuItem("M001", "Cappuccino", 3.50, 1, MenuCategory.COFFEE);
+        MenuItem itemTwo = new MenuItem("M002", "Blueberry Muffin", 2.50, 2, MenuCategory.SNACK);
+
+        manager.addNewItem(menuManager, itemOne);
+        manager.addNewItem(menuManager, itemTwo);
+
+        manager.manageMenuItems(menuManager);
 
         // Create orders
         Order order1 = new Order("O001");
-        order1.addItem(new MenuItem("M001", "Cappuccino", 3.50, 1, MenuCategory.COFFEE));
+        order1.addItem(itemOne);
         Order order2 = new Order("O002");
-        order2.addItem(new MenuItem("M002", "Blueberry Muffin", 2.50, 2, MenuCategory.SNACK));
+        order2.addItem(itemTwo);
 
         //cashier take order and make payment
         cashier.takeOrder(order1);
@@ -34,7 +41,7 @@ public class TestClass {
         manager.makePayment(order2, new Payment(2.50));
 
         // Manager removes menu item
-        manager.deleteItem(menuManager, "M002");
+//        manager.deleteItem(menuManager, "M002");
 
 
     }
