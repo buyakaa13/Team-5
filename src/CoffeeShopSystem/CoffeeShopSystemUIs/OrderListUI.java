@@ -13,13 +13,12 @@ import java.util.List;
 public class OrderListUI extends JFrame {
 
     public OrderListUI(List<Order> orders) {
-        // Set up the frame
+
         setTitle("Order List");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(600, 400);
         setLocationRelativeTo(null);
 
-        // Panel for holding the table and the back button
         JPanel panel = new JPanel(new BorderLayout());
 
         // Create table for the orders
@@ -51,7 +50,6 @@ public class OrderListUI extends JFrame {
             }
         }
 
-        // Create JTable and disable cell editing
         JTable table = new JTable(tableModel) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -59,32 +57,25 @@ public class OrderListUI extends JFrame {
             }
         };
 
-        // Scroll pane for the table
         JScrollPane scrollPane = new JScrollPane(table);
 
-        // Add scroll pane to the panel
         panel.add(scrollPane, BorderLayout.CENTER);
 
-        // Back button
         JButton backButton = new JButton("Back");
         backButton.addActionListener(e -> dispose()); // Close the current window
 
-        // Panel for the back button
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(backButton);
 
-        // Add button panel to the bottom of the main panel
         panel.add(buttonPanel, BorderLayout.SOUTH);
 
-        // Add panel to the frame
         add(panel);
 
-        // Set visible
         setVisible(true);
     }
 
     public static void main(String[] args) {
-        // Sample order data (this would typically come from an API or database)
+        // test the table
         Order order1 = new Order("ORD001", OrderStatus.PAID);
         order1.addItem(new CoffeeShopSystem.MenuItem("1", "Espresso", 2.5, 2, MenuCategory.COFFEE));
         order1.addItem(new CoffeeShopSystem.MenuItem("2", "Croissant", 1.5, 1, MenuCategory.DESSERT));
@@ -94,10 +85,8 @@ public class OrderListUI extends JFrame {
         order2.addItem(new CoffeeShopSystem.MenuItem("4", "Latte", 3.0, 1, MenuCategory.COFFEE));
         order2.addItem(new MenuItem("5", "Muffin", 2.0, 2, MenuCategory.DESSERT));
 
-        // List of orders
         List<Order> orders = List.of(order1, order2);
 
-        // Run the UI in the Event Dispatch Thread
         SwingUtilities.invokeLater(() -> new OrderListUI(orders));
     }
 }
