@@ -206,6 +206,14 @@ public class ManageMenuItemUI {
         tglbtnNewToggleButton.setOpaque(true);
         tglbtnNewToggleButton.setBorderPainted(false);
         tglbtnNewToggleButton.setBounds(6, 6, 97, 29);
+        tglbtnNewToggleButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                frame.setVisible(false);
+//                MainWindow mWindow = new MainWindow();
+//
+//                mWindow.mframe.setVisible(true);
+            }
+        });
         tglbtnNewToggleButton.setForeground(new Color(87, 131, 219));
         frame.getContentPane().add(tglbtnNewToggleButton);
     }
