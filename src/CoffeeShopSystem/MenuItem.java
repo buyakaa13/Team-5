@@ -1,5 +1,7 @@
 package CoffeeShopSystem;
 
+import CoffeeShopSystem.CoffeeShopSystemEnums.MenuCategory;
+
 // MenuItem Class
 public class MenuItem {
     private String itemId;

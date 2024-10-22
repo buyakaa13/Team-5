@@ -1,5 +1,8 @@
 package CoffeeShopSystem;
 
+import CoffeeShopSystem.CoffeeShopSystemEnums.OrderStatus;
+import CoffeeShopSystem.CoffeeShopSystemEnums.MenuCategory;
+
 public class TestClass {
     public static void main(String[] args) {
         // Create menu and employee managers
@@ -27,9 +30,10 @@ public class TestClass {
         manager.manageMenuItems(menuManager);
 
         // Create orders
-        Order order1 = new Order("O001");
+        Order order1 = new Order("O001", OrderStatus.PENDING);
         order1.addItem(itemOne);
-        Order order2 = new Order("O002");
+        order1.addItem(itemTwo);
+        Order order2 = new Order("O002", OrderStatus.PENDING);
         order2.addItem(itemTwo);
 
         //cashier take order and make payment
