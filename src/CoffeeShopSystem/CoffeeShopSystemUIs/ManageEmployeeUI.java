@@ -1,18 +1,14 @@
 package CoffeeShopSystem.CoffeeShopSystemUIs;
 
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Vector;
 
-import javax.swing.JFrame;
-import javax.swing.JTextField;
-import javax.swing.JToggleButton;
-import javax.swing.JLabel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.JButton;
 import java.awt.Color;
 
 public class ManageEmployeeUI {
@@ -53,15 +49,14 @@ public class ManageEmployeeUI {
      * Initialize the contents of the frame.
      */
     private void initialize() {
-        Vector roleItems=new Vector();
-        roleItems.add("Manager");
-        roleItems.add("Cashier");
 
         frame = new JFrame();
         frame.getContentPane().setBackground(Color.WHITE);
         frame.setBounds(100, 100, 600, 550);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().setLayout(null);
+        String[] column = {"First Name","Last Name","Username", "Role"};
+        String[] row = new String[4];
 
 //		JPanel panel = new JPanel();
 //		panel.setBackground(new Color(233, 150, 122));
@@ -86,10 +81,10 @@ public class ManageEmployeeUI {
         lblNewLabel_1.setBounds(106, 72, 75, 16);
         frame.getContentPane().add(lblNewLabel_1);
 
-        final DefaultComboBoxModel roleItemsModel = new DefaultComboBoxModel(roleItems);
-        JComboBox catItems = new JComboBox(roleItemsModel);
-        catItems.setBounds(200, 102, 254, 40);
-        frame.getContentPane().add(catItems);
+        String[] items = {"Please select role","Manager", "Cashier" };
+        JComboBox<String> comboBox = new JComboBox<>(items);
+        comboBox.setBounds(200, 102, 254, 40);
+        frame.getContentPane().add(comboBox);
 
         JLabel lblNewLabel_2 = new JLabel("Role:");
         lblNewLabel_2.setBounds(106, 109, 97, 16);
@@ -109,6 +104,28 @@ public class ManageEmployeeUI {
         btnNewButton.setBorderPainted(false);
         btnNewButton.setForeground(new Color(247, 255, 254));
         btnNewButton.setBackground(new Color(0, 255, 0));
+        btnNewButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if(firstName.getText().equals("")||lastName.getText().equals("")|| userName.getText().equals("") || comboBox.getSelectedItem().equals("Please select a category")) {
+                    JOptionPane.showMessageDialog(null, "Please enter all input fields");
+                }
+                else {
+                    // add the entered inputs to the table
+                    row[0] = firstName.getText();
+                    row[1] = lastName.getText();
+                    row[2] = comboBox.getSelectedItem().toString();
+                    row[3] = userName.getText();
+                    model.addRow(row);
+                    JOptionPane.showMessageDialog(null, "Employee added successfully");
+                    // clear all the text fields
+                    firstName.setText("");
+                    lastName.setText("");
+                    userName.setText("");
+                    comboBox.setSelectedIndex(0);
+                }
+
+            }
+        });
         btnNewButton.setBounds(103, 192, 117, 29);
         frame.getContentPane().add(btnNewButton);
 
@@ -116,6 +133,25 @@ public class ManageEmployeeUI {
         btnNewButton_1.setBackground(Color.CYAN);
         btnNewButton_1.setOpaque(true);
         btnNewButton_1.setBorderPainted(false);
+        btnNewButton_1.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                int r = table.getSelectedRow();
+                if(r>=0) {
+                    model.setValueAt(firstName.getText(), r, 0);
+                    model.setValueAt(lastName.getText(), r, 1);
+                    model.setValueAt(comboBox.getSelectedItem().toString(), r, 2);
+                    model.setValueAt(userName.getText(), r, 3);
+                    JOptionPane.showMessageDialog(null, "Employee updated Successfully");
+                    firstName.setText("");
+                    lastName.setText("");
+                    userName.setText("");
+                    comboBox.setSelectedIndex(0);
+                }
+                else {
+                    JOptionPane.showMessageDialog(null, "Please select an employee");
+                }
+            }
+        });
         btnNewButton_1.setBounds(232, 192, 117, 29);
         frame.getContentPane().add(btnNewButton_1);
 
@@ -123,6 +159,23 @@ public class ManageEmployeeUI {
         btnNewButton_2.setBackground(Color.RED);
         btnNewButton_2.setOpaque(true);
         btnNewButton_2.setBorderPainted(false);
+        btnNewButton_2.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                int r = table.getSelectedRow();
+                if(r>=0) {
+                    model.removeRow(r);
+                    JOptionPane.showMessageDialog(null, "Employee deleted Successfully");
+                    firstName.setText("");
+                    lastName.setText("");
+                    userName.setText("");
+                    comboBox.setSelectedIndex(0);
+
+                }
+                else {
+                    JOptionPane.showMessageDialog(null, "Please select an employee on the table to delete");
+                }
+            }
+        });
         btnNewButton_2.setBounds(361, 192, 117, 29);
         frame.getContentPane().add(btnNewButton_2);
 
@@ -131,12 +184,20 @@ public class ManageEmployeeUI {
         frame.getContentPane().add(scrollPane);
 
         table = new JTable();
+        table.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int r = table.getSelectedRow();
+                firstName.setText(model.getValueAt(r, 0).toString());
+                lastName.setText(model.getValueAt(r, 1).toString());
+                comboBox.setSelectedItem(model.getValueAt(r, 2).toString());
+                userName.setText(model.getValueAt(r, 3).toString());
 
+            }
+        });
 
         table.setBackground(new Color(255, 240, 245));
         model = new DefaultTableModel();
-        String[] column = {"First Name","Last Name","Username", "Role"};
-        String[] row = new String[4];
         model.setColumnIdentifiers(column);
         table.setModel(model);
         scrollPane.setViewportView(table);

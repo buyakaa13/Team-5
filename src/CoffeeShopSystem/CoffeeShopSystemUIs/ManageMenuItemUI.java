@@ -1,19 +1,14 @@
 package CoffeeShopSystem.CoffeeShopSystemUIs;
 
 import java.awt.EventQueue;
-import java.util.Vector;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-import javax.swing.JFrame;
-import javax.swing.JTextField;
-import javax.swing.JLabel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.JButton;
 import java.awt.Color;
-import javax.swing.JToggleButton;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class ManageMenuItemUI {
 
@@ -53,17 +48,15 @@ public class ManageMenuItemUI {
      * Initialize the contents of the frame.
      */
     private void initialize() {
-        Vector categoryItems=new Vector();
-        categoryItems.add("Coffee");
-        categoryItems.add("Snack");
-        categoryItems.add("Beverage");
-        categoryItems.add("Desert");
 
         frame = new JFrame();
         frame.getContentPane().setBackground(Color.WHITE);
         frame.setBounds(100, 100, 600, 550);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().setLayout(null);
+        String[] row = new String[4];
+        String[] column = {"Item Name","Item Price","Item Category", "Item Quantity"};
+        String itemCategory;
 
 //		JPanel panel = new JPanel();
 //		panel.setBackground(new Color(233, 150, 122));
@@ -88,10 +81,10 @@ public class ManageMenuItemUI {
         lblNewLabel_1.setBounds(122, 73, 75, 16);
         frame.getContentPane().add(lblNewLabel_1);
 
-        final DefaultComboBoxModel catItemsModel = new DefaultComboBoxModel(categoryItems);
-        JComboBox catItems = new JComboBox(catItemsModel);
-        catItems.setBounds(216, 103, 254, 40);
-        frame.getContentPane().add(catItems);
+        String[] items = {"Please select a category","Coffee", "Snacks", "Beverages", "Desert" };
+        JComboBox<String> comboBox = new JComboBox<>(items);
+        comboBox.setBounds(216, 103, 254, 40);
+        frame.getContentPane().add(comboBox);
 
         JLabel lblNewLabel_2 = new JLabel("Item Category:");
         lblNewLabel_2.setBounds(122, 110, 97, 16);
@@ -111,6 +104,28 @@ public class ManageMenuItemUI {
         btnNewButton.setBorderPainted(false);
         btnNewButton.setForeground(new Color(247, 255, 254));
         btnNewButton.setBackground(new Color(0, 255, 0));
+        btnNewButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if(itemName.getText().equals("")||itemPrice.getText().equals("")||itemQuantity.getText().equals("") || comboBox.getSelectedItem().equals("Please select a category")) {
+                    JOptionPane.showMessageDialog(null, "Please enter all input fields");
+                }
+                else {
+                    // add the entered inputs to the table
+                    row[0] = itemName.getText();
+                    row[1] = itemPrice.getText();
+                    row[2] = comboBox.getSelectedItem().toString();
+                    row[3] = itemQuantity.getText();
+                    model.addRow(row);
+                    JOptionPane.showMessageDialog(null, "Item added successfully");
+                    // clear all the text fields
+                    itemName.setText("");
+                    itemPrice.setText("");
+                    itemQuantity.setText("");
+                    comboBox.setSelectedIndex(0);
+                }
+
+            }
+        });
         btnNewButton.setBounds(119, 193, 117, 29);
         frame.getContentPane().add(btnNewButton);
 
@@ -118,6 +133,25 @@ public class ManageMenuItemUI {
         btnNewButton_1.setBackground(Color.CYAN);
         btnNewButton_1.setOpaque(true);
         btnNewButton_1.setBorderPainted(false);
+        btnNewButton_1.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                int r = table.getSelectedRow();
+                if(r>=0) {
+                    model.setValueAt(itemName.getText(), r, 0);
+                    model.setValueAt(itemPrice.getText(), r, 1);
+                    model.setValueAt(comboBox.getSelectedItem().toString(), r, 2);
+                    model.setValueAt(itemQuantity.getText(), r, 3);
+                    JOptionPane.showMessageDialog(null, "Item updated Successfully");
+                    itemName.setText("");
+                    itemPrice.setText("");
+                    itemQuantity.setText("");
+                    comboBox.setSelectedIndex(0);
+                }
+                else {
+                    JOptionPane.showMessageDialog(null, "Please select an item");
+                }
+            }
+        });
         btnNewButton_1.setBounds(248, 193, 117, 29);
         frame.getContentPane().add(btnNewButton_1);
 
@@ -125,6 +159,23 @@ public class ManageMenuItemUI {
         btnNewButton_2.setBackground(Color.RED);
         btnNewButton_2.setOpaque(true);
         btnNewButton_2.setBorderPainted(false);
+        btnNewButton_2.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                int r = table.getSelectedRow();
+                if(r>=0) {
+                    model.removeRow(r);
+                    JOptionPane.showMessageDialog(null, "Item deleted Successfully");
+                    itemName.setText("");
+                    itemPrice.setText("");
+                    itemQuantity.setText("");
+                    comboBox.setSelectedIndex(0);
+
+                }
+                else {
+                    JOptionPane.showMessageDialog(null, "Please select an item on the table to delete");
+                }
+            }
+        });
         btnNewButton_2.setBounds(377, 193, 117, 29);
         frame.getContentPane().add(btnNewButton_2);
 
@@ -134,11 +185,19 @@ public class ManageMenuItemUI {
 
         table = new JTable();
 
+        table.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int r = table.getSelectedRow();
+                itemName.setText(model.getValueAt(r, 0).toString());
+                itemPrice.setText(model.getValueAt(r, 1).toString());
+                comboBox.setSelectedItem(model.getValueAt(r, 2).toString());
+                itemQuantity.setText(model.getValueAt(r, 3).toString());
 
+            }
+        });
         table.setBackground(new Color(255, 240, 245));
         model = new DefaultTableModel();
-        String[] column = {"Item Name","Item Price","Item Category", "Item Quantity"};
-        String[] row = new String[4];
         model.setColumnIdentifiers(column);
         table.setModel(model);
         scrollPane.setViewportView(table);
