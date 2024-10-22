@@ -7,13 +7,15 @@ abstract class Employee {
     private String firstName;
     private String lastName;
     private String username;
+    private String password;
     private EmployeeRole role;
 
-    public Employee(String employeeId, String firstName, String lastName, String username, EmployeeRole role) {
+    public Employee(String employeeId, String firstName, String lastName, String username, String password, EmployeeRole role) {
         this.employeeId = employeeId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
+        this.password = password;
         this.role = role;
     }
 
@@ -32,6 +34,9 @@ abstract class Employee {
 
     public String getUsername() {
         return username;
+    }
+    public String getPassword() {
+        return password;
     }
 
     public EmployeeRole getRole() {
@@ -56,6 +61,9 @@ abstract class Employee {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public void setRole(EmployeeRole newRole) {
