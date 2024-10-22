@@ -1,5 +1,8 @@
 package CoffeeShopSystem;
 
+import CoffeeShopSystem.CoffeeShopSystemEnums.OrderStatus;
+import CoffeeShopSystem.CoffeeShopSystemEnums.MenuCategory;
+
 public class TestClass {
     public static void main(String[] args) {
         // Create menu and employee managers

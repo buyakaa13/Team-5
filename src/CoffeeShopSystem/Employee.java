@@ -1,7 +1,6 @@
 package CoffeeShopSystem;
 
-import java.util.ArrayList;
-import java.util.List;
+import CoffeeShopSystem.CoffeeShopSystemEnums.EmployeeRole;
 
 abstract class Employee {
     private String employeeId;

@@ -1,5 +1,7 @@
 package CoffeeShopSystem;
 
+import CoffeeShopSystem.CoffeeShopSystemEnums.EmployeeRole;
+
 public class Manager extends Employee {
     public Manager(String employeeId, String firstName, String lastName, String username) {
         super(employeeId, firstName, lastName, username, EmployeeRole.MANAGER);

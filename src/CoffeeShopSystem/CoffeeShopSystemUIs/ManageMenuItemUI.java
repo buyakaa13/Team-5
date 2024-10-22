@@ -1,4 +1,4 @@
-package CoffeeShopSystem;
+package CoffeeShopSystem.CoffeeShopSystemUIs;
 
 import java.awt.EventQueue;
 import java.util.Vector;

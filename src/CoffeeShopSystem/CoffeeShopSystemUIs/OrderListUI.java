@@ -1,4 +1,9 @@
-package CoffeeShopSystem;
+package CoffeeShopSystem.CoffeeShopSystemUIs;
+
+import CoffeeShopSystem.CoffeeShopSystemEnums.MenuCategory;
+import CoffeeShopSystem.MenuItem;
+import CoffeeShopSystem.Order;
+import CoffeeShopSystem.CoffeeShopSystemEnums.OrderStatus;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -11,7 +16,7 @@ public class OrderListUI extends JFrame {
         // Set up the frame
         setTitle("Order List");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(800, 400);
+        setSize(600, 400);
         setLocationRelativeTo(null);
 
         // Panel for holding the table and the back button
@@ -24,7 +29,7 @@ public class OrderListUI extends JFrame {
         // Loop through orders and populate the table
         for (Order order : orders) {
             boolean firstRow = true; // Track whether it's the first row for this order
-            for (MenuItem item : order.getItems()) {
+            for (CoffeeShopSystem.MenuItem item : order.getItems()) {
                 if (firstRow) {
                     // Add a row for the first item in the order with all columns populated
                     tableModel.addRow(new Object[]{
@@ -81,12 +86,12 @@ public class OrderListUI extends JFrame {
     public static void main(String[] args) {
         // Sample order data (this would typically come from an API or database)
         Order order1 = new Order("ORD001", OrderStatus.PAID);
-        order1.addItem(new MenuItem("1", "Espresso", 2.5, 2, MenuCategory.COFFEE));
-        order1.addItem(new MenuItem("2", "Croissant", 1.5, 1, MenuCategory.DESSERT));
-        order1.addItem(new MenuItem("3", "Orange Juice", 3.0, 1, MenuCategory.BEVERAGE));
+        order1.addItem(new CoffeeShopSystem.MenuItem("1", "Espresso", 2.5, 2, MenuCategory.COFFEE));
+        order1.addItem(new CoffeeShopSystem.MenuItem("2", "Croissant", 1.5, 1, MenuCategory.DESSERT));
+        order1.addItem(new CoffeeShopSystem.MenuItem("3", "Orange Juice", 3.0, 1, MenuCategory.BEVERAGE));
 
         Order order2 = new Order("ORD002", OrderStatus.PENDING);
-        order2.addItem(new MenuItem("4", "Latte", 3.0, 1, MenuCategory.COFFEE));
+        order2.addItem(new CoffeeShopSystem.MenuItem("4", "Latte", 3.0, 1, MenuCategory.COFFEE));
         order2.addItem(new MenuItem("5", "Muffin", 2.0, 2, MenuCategory.DESSERT));
 
         // List of orders

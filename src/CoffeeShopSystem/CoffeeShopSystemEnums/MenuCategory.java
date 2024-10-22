@@ -1,4 +1,4 @@
-package CoffeeShopSystem;
+package CoffeeShopSystem.CoffeeShopSystemEnums;
 
 // Enum for Menu Categories
 public enum MenuCategory {

@@ -1,8 +1,6 @@
-package CoffeeShopSystem;
+package CoffeeShopSystem.CoffeeShopSystemUIs;
 
 import java.awt.EventQueue;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.Vector;
 
 import javax.swing.JFrame;
@@ -12,12 +10,10 @@ import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JComboBox;
-import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JButton;
 import java.awt.Color;
-import javax.swing.JPanel;
 
 public class ManageEmployeeUI {
 
