@@ -17,6 +17,7 @@ public class ManageEmployeeUI {
     private JTextField firstName;
     private JTextField lastName;
     private JTextField userName;
+    private JTextField password;
     DefaultTableModel model;
     private JTable table;
     private JScrollPane scrollPane;
@@ -52,7 +53,7 @@ public class ManageEmployeeUI {
 
         frame = new JFrame();
         frame.getContentPane().setBackground(Color.WHITE);
-        frame.setBounds(100, 100, 600, 550);
+        frame.setBounds(100, 100, 600, 580);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().setLayout(null);
         String[] column = {"First Name","Last Name","Username", "Role"};
@@ -72,6 +73,16 @@ public class ManageEmployeeUI {
         lastName.setBounds(200, 64, 254, 33);
         frame.getContentPane().add(lastName);
         lastName.setColumns(10);
+
+        userName = new JTextField();
+        userName.setBounds(200, 137, 254, 33);
+        frame.getContentPane().add(userName);
+        userName.setColumns(10);
+
+        password = new JTextField();
+        password.setBounds(200, 175, 254, 33);
+        frame.getContentPane().add(password);
+        password.setColumns(10);
 
         JLabel lblNewLabel = new JLabel("First Name:");
         lblNewLabel.setBounds(106, 34, 82, 16);
@@ -94,10 +105,9 @@ public class ManageEmployeeUI {
         lblNewLabel_3.setBounds(106, 146, 97, 16);
         frame.getContentPane().add(lblNewLabel_3);
 
-        userName = new JTextField();
-        userName.setBounds(200, 137, 254, 33);
-        frame.getContentPane().add(userName);
-        userName.setColumns(10);
+        JLabel lblNewLabel_4 = new JLabel("Password:");
+        lblNewLabel_4.setBounds(106, 184, 97, 16);
+        frame.getContentPane().add(lblNewLabel_4);
 
         JButton btnNewButton = new JButton("Add");
         btnNewButton.setOpaque(true);
@@ -106,7 +116,7 @@ public class ManageEmployeeUI {
         btnNewButton.setBackground(new Color(0, 255, 0));
         btnNewButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if(firstName.getText().equals("")||lastName.getText().equals("")|| userName.getText().equals("") || comboBox.getSelectedItem().equals("Please select a category")) {
+                if(firstName.getText().equals("")||lastName.getText().equals("")|| userName.getText().equals("") || password.getText().equals("") || comboBox.getSelectedItem().equals("Please select a category")) {
                     JOptionPane.showMessageDialog(null, "Please enter all input fields");
                 }
                 else {
@@ -121,12 +131,13 @@ public class ManageEmployeeUI {
                     firstName.setText("");
                     lastName.setText("");
                     userName.setText("");
+                    password.setText("");
                     comboBox.setSelectedIndex(0);
                 }
 
             }
         });
-        btnNewButton.setBounds(103, 192, 117, 29);
+        btnNewButton.setBounds(103, 230, 117, 29);
         frame.getContentPane().add(btnNewButton);
 
         JButton btnNewButton_1 = new JButton("Update");
@@ -152,7 +163,7 @@ public class ManageEmployeeUI {
                 }
             }
         });
-        btnNewButton_1.setBounds(232, 192, 117, 29);
+        btnNewButton_1.setBounds(232, 230, 117, 29);
         frame.getContentPane().add(btnNewButton_1);
 
         JButton btnNewButton_2 = new JButton("Delete");
@@ -176,11 +187,11 @@ public class ManageEmployeeUI {
                 }
             }
         });
-        btnNewButton_2.setBounds(361, 192, 117, 29);
+        btnNewButton_2.setBounds(361, 230, 117, 29);
         frame.getContentPane().add(btnNewButton_2);
 
         scrollPane = new JScrollPane();
-        scrollPane.setBounds(6, 238, 588, 259);
+        scrollPane.setBounds(6, 278, 588, 259);
         frame.getContentPane().add(scrollPane);
 
         table = new JTable();
