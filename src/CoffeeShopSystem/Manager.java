@@ -31,7 +31,7 @@ public class Manager extends Employee {
         employee.removeEmployee(employeeId);
     }
 
-    public void deleteItem (MenuManager menuManager, String itemId) {
+    public void deleteItem (MenuManager menuManager, long itemId) {
         menuManager.removeMenuItem(itemId);
     }
 }

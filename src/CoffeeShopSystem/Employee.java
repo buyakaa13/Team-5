@@ -3,7 +3,7 @@ package CoffeeShopSystem;
 import java.util.ArrayList;
 import java.util.List;
 
-abstract class Employee {
+public abstract class Employee {
     private String employeeId;
     private String firstName;
     private String lastName;

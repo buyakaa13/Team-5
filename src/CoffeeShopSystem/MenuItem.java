@@ -1,23 +1,31 @@
 package CoffeeShopSystem;
 
+import java.io.Serializable;
+
 // MenuItem Class
-public class MenuItem {
-    private String itemId;
+public class MenuItem implements Serializable {
+    private long itemId;
     private String itemName;
     private double price;
     private int quantity;
     private MenuCategory category;  // Category Enum
+    
+    private String imagePath;
 
-    public MenuItem(String itemId, String itemName, double price, int quantity, MenuCategory category) {
+    private int selectedQty;
+
+    public MenuItem(long itemId, String itemName, double price, int quantity, MenuCategory category, String imagePath) {
         this.itemId = itemId;
         this.itemName = itemName;
         this.price = price;
         this.quantity = quantity;
         this.category = category;
+        this.imagePath = imagePath;
     }
 
     // Getters and Setters
-    public String getItemId() {
+
+    public long getItemId() {
         return itemId;
     }
 
@@ -46,6 +54,18 @@ public class MenuItem {
 
     public MenuCategory getCategory() {
         return category;
+    }
+
+    public void setSelectedQty(int selectedQty) {
+        this.selectedQty = selectedQty;
+    }
+
+    public int getSelectedQty() {
+        return selectedQty;
+    }
+
+    public String getImagePath() {
+        return imagePath;
     }
 
     @Override

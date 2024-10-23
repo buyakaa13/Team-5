@@ -1,11 +1,11 @@
 package Lab2.Prob2B;
 
-public class OrderLine {
+public class orderLine {
     private int orderLineNumber;
     private double price;
     private int qty;
 
-    public OrderLine(int orderLineNumber, double price, int qty){
+    public orderLine(int orderLineNumber, double price, int qty){
         this.orderLineNumber = orderLineNumber;
         this.price = price;
         this.qty = qty;

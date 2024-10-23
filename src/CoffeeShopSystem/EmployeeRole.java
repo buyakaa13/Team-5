@@ -1,7 +1,7 @@
 package CoffeeShopSystem;
 
 // Enum for Employee Roles
-enum EmployeeRole {
+public enum EmployeeRole {
     MANAGER, CASHIER
 }
 
