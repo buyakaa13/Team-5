@@ -1,7 +1,7 @@
 package CoffeeShopSystem;
 
-import CoffeeShopSystem.CoffeeShopSystemEnums.OrderStatus;
 import CoffeeShopSystem.CoffeeShopSystemEnums.MenuCategory;
+import CoffeeShopSystem.CoffeeShopSystemEnums.PaymentType;
 
 public class TestClass {
     public static void main(String[] args) {
