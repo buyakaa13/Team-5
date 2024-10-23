@@ -49,6 +49,17 @@ public class DataAccessFacade implements DataAccess {
 		return (HashMap<String, Order>) readFromStorage(
 				StorageType.ORDERS);
 	}
+
+	public void updateOrderInMap(String orderId, Order updatedOrder) {
+		HashMap<String, Order> orderMap = readOrderMap();
+		if (orderMap.containsKey(orderId)) {
+			orderMap.put(orderId, updatedOrder);
+			saveToStorage(StorageType.ORDERS, orderMap);
+		}
+		else
+			System.out.println("Order with ID " + orderId + " not found.");
+	}
+
 //
 //
 //	@SuppressWarnings("unchecked")

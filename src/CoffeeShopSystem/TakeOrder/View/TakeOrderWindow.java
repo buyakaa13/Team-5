@@ -2,6 +2,7 @@ package CoffeeShopSystem.TakeOrder.View;
 
 import CoffeeShopSystem.*;
 import CoffeeShopSystem.CoffeeShopSystemEnums.MenuCategory;
+import CoffeeShopSystem.CoffeeShopSystemEnums.OrderStatus;
 import CoffeeShopSystem.DataAccess.DataAccess;
 import CoffeeShopSystem.DataAccess.DataAccessFacade;
 import CoffeeShopSystem.DataAccess.TestData;
@@ -33,6 +34,7 @@ public class TakeOrderWindow {
     public double getTotalAmount() {
         return totalAmount;
     }
+    private DataAccess dataAccess;
 
     // Launch the application.
     public static void main(String[] args) {
@@ -53,6 +55,7 @@ public class TakeOrderWindow {
     public TakeOrderWindow() {
         order = new Order();
         paymentList = new ArrayList<>();
+        dataAccess = new DataAccessFacade();
         initialize();
     }
 
@@ -218,7 +221,17 @@ public class TakeOrderWindow {
 
         JPanel buttonPanel = new JPanel();
         JButton returnBtn = new JButton();
-        returnBtn.setText("Return");
+        returnBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                MainWindow mainWindow = new MainWindow();
+                mainWindow.mframe.setVisible(true);
+                bframe.dispose();
+            }
+        });
+        returnBtn.setText("Go back");
+        returnBtn.setOpaque(true);
+        returnBtn.setBorderPainted(false);
         buttonPanel.add(returnBtn);
 
         JButton paymentBtn = new JButton();
@@ -235,6 +248,7 @@ public class TakeOrderWindow {
         if(totalAmount == 0)
             JOptionPane.showMessageDialog(null, "Please choose some item!", "Warning", JOptionPane.WARNING_MESSAGE);
         else{
+            saveOrder();
             PaymentWindow pWindow=new PaymentWindow(this);
             pWindow.pframe.setVisible(true);
         }
@@ -242,12 +256,12 @@ public class TakeOrderWindow {
 
     public void updatePaymentStatus(boolean isPaymentSuccessful) {
         if (isPaymentSuccessful){
-            saveOrder();
+            order.setStatus(OrderStatus.PAID);
+            dataAccess.updateOrderInMap(order.getOrderId(), order);
             clear();
         }
-        else {
-//            paymentStatusLabel.setText("Payment Status: Failed");
-        }
+        else
+            JOptionPane.showMessageDialog(null, "Payment failed!", "Warning", JOptionPane.ERROR_MESSAGE);
     }
 
     private void calculateTotal(){
@@ -260,7 +274,6 @@ public class TakeOrderWindow {
     }
 
     private void saveOrder() {
-        ArrayList<Order> orders = new ArrayList<>();
         for (int i = 0; i < model.getRowCount(); i++) {
             Long itemId = Long.parseLong(model.getValueAt(i, 0).toString());
             String itemName = model.getValueAt(i, 1).toString();
@@ -269,10 +282,9 @@ public class TakeOrderWindow {
             int itemQty = Integer.parseInt(model.getValueAt(i, 4).toString());
             MenuItem menuItem = new MenuItem(itemId, itemName, itemPrice, itemQty, MenuCategory.valueOf(category), "");
             order.addItem(menuItem);
-            orders.add(order);
         }
         order.setTotalAmount(totalAmount);
-        DataAccessFacade.loadOrderMap(orders);
+        dataAccess.saveNewOrder(order);
     }
 
     private void clear(){
@@ -285,7 +297,7 @@ public class TakeOrderWindow {
         model = new DefaultTableModel(){
             @Override
             public boolean isCellEditable(int row, int column) {
-                return false;  // This makes all cells non-editable
+                return false;
             }
         };
         String[] column = {"ID", "ItemName", "Category", "Price", "Qty", "Total"};

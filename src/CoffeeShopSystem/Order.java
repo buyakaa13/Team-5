@@ -19,6 +19,7 @@ public class Order implements Serializable {
     public Order() {
         this.orderId = UUID.randomUUID().toString();
         this.orderDate = LocalDate.now();
+        this.status = OrderStatus.PENDING;
         this.items = new ArrayList<>();
     }
 

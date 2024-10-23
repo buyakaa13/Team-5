@@ -11,7 +11,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.HashMap;
 
 public class MainWindow {
 
@@ -68,7 +67,6 @@ public class MainWindow {
             }
         });
         takeOrderBtn.setBounds(136, 101, 117, 100);
-
 
         JButton addMenuBtn = new JButton("Manage Menu");
         addMenuBtn.setBounds(300, 101, 117, 100);
