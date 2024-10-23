@@ -1,5 +1,6 @@
 package CoffeeShopSystem.CoffeeShopSystemUIs;
 
+import CoffeeShopSystem.CoffeeShopSystemEnums.MenuCategory;
 import CoffeeShopSystem.MainWindow;
 
 import java.awt.EventQueue;
@@ -11,6 +12,11 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.HashMap;
+
+import CoffeeShopSystem.DataAccess.DataAccess;
+import CoffeeShopSystem.DataAccess.DataAccessFacade;
+import CoffeeShopSystem.MenuItem;
 
 public class ManageMenuItemUI {
 
@@ -18,9 +24,11 @@ public class ManageMenuItemUI {
     private JTextField itemName;
     private JTextField itemPrice;
     private JTextField itemQuantity;
+    private JTextField itemImage;
     DefaultTableModel model;
     private JTable table;
     private JScrollPane scrollPane;
+    private DataAccess dataAccess;
 
     /**
      * Launch the application.
@@ -43,7 +51,9 @@ public class ManageMenuItemUI {
      * Create the application.
      */
     public ManageMenuItemUI() {
+        dataAccess = new DataAccessFacade();
         initialize();
+
     }
 
     /**
@@ -56,9 +66,8 @@ public class ManageMenuItemUI {
         frame.setBounds(100, 100, 600, 550);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().setLayout(null);
-        String[] row = new String[4];
-        String[] column = {"Item Name","Item Price","Item Category", "Item Quantity"};
-        String itemCategory;
+        String[] row = new String[5];
+        String[] column = {"Item Name","Item Price","Item Category", "Item Quantity", "Item Image"};
 
 //		JPanel panel = new JPanel();
 //		panel.setBackground(new Color(233, 150, 122));
@@ -83,7 +92,7 @@ public class ManageMenuItemUI {
         lblNewLabel_1.setBounds(122, 73, 75, 16);
         frame.getContentPane().add(lblNewLabel_1);
 
-        String[] items = {"Please select a category","Coffee", "Snacks", "Beverages", "Desert" };
+        String[] items = {"Please select a category","COFFEE", "SNACK", "BEVERAGE", "DESSERT" };
         JComboBox<String> comboBox = new JComboBox<>(items);
         comboBox.setBounds(216, 103, 254, 40);
         frame.getContentPane().add(comboBox);
@@ -96,10 +105,20 @@ public class ManageMenuItemUI {
         lblNewLabel_3.setBounds(122, 147, 97, 16);
         frame.getContentPane().add(lblNewLabel_3);
 
+        JLabel lblNewLabel_4 = new JLabel("Item Image:");
+        lblNewLabel_4.setBounds(122, 178, 97, 16);
+        frame.getContentPane().add(lblNewLabel_4);
+
         itemQuantity = new JTextField();
         itemQuantity.setBounds(216, 138, 254, 33);
         frame.getContentPane().add(itemQuantity);
         itemQuantity.setColumns(10);
+
+
+        itemImage = new JTextField();
+        itemImage.setBounds(216, 176, 254, 33);
+        frame.getContentPane().add(itemImage);
+        itemImage.setColumns(10);
 
         JButton btnNewButton = new JButton("Add");
         btnNewButton.setOpaque(true);
@@ -108,27 +127,32 @@ public class ManageMenuItemUI {
         btnNewButton.setBackground(new Color(0, 255, 0));
         btnNewButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if(itemName.getText().equals("")||itemPrice.getText().equals("")||itemQuantity.getText().equals("") || comboBox.getSelectedItem().equals("Please select a category")) {
+                if(itemName.getText().equals("")||itemPrice.getText().equals("")||itemQuantity.getText().equals("") || comboBox.getSelectedItem().equals("Please select a category") || itemImage.getText().equals("")) {
                     JOptionPane.showMessageDialog(null, "Please enter all input fields");
                 }
                 else {
+
                     // add the entered inputs to the table
                     row[0] = itemName.getText();
                     row[1] = itemPrice.getText();
                     row[2] = comboBox.getSelectedItem().toString();
                     row[3] = itemQuantity.getText();
+                    row[4] = itemImage.getText();
                     model.addRow(row);
+                    MenuItem addToDb = new MenuItem(itemName.getText(), Double.parseDouble(itemPrice.getText()), Integer.parseInt(itemQuantity.getText()), MenuCategory.valueOf(comboBox.getSelectedItem().toString()), itemImage.getText());
+                    dataAccess.loadItemMap(addToDb);
                     JOptionPane.showMessageDialog(null, "Item added successfully");
                     // clear all the text fields
                     itemName.setText("");
                     itemPrice.setText("");
                     itemQuantity.setText("");
                     comboBox.setSelectedIndex(0);
+                    itemImage.setText("");
                 }
 
             }
         });
-        btnNewButton.setBounds(119, 193, 117, 29);
+        btnNewButton.setBounds(119, 220, 117, 29);
         frame.getContentPane().add(btnNewButton);
 
         JButton btnNewButton_1 = new JButton("Update");
@@ -143,18 +167,20 @@ public class ManageMenuItemUI {
                     model.setValueAt(itemPrice.getText(), r, 1);
                     model.setValueAt(comboBox.getSelectedItem().toString(), r, 2);
                     model.setValueAt(itemQuantity.getText(), r, 3);
+                    model.setValueAt(itemImage.getText(), r, 4);
                     JOptionPane.showMessageDialog(null, "Item updated Successfully");
                     itemName.setText("");
                     itemPrice.setText("");
                     itemQuantity.setText("");
                     comboBox.setSelectedIndex(0);
+                    itemImage.setText("");
                 }
                 else {
                     JOptionPane.showMessageDialog(null, "Please select an item");
                 }
             }
         });
-        btnNewButton_1.setBounds(248, 193, 117, 29);
+        btnNewButton_1.setBounds(248, 220, 117, 29);
         frame.getContentPane().add(btnNewButton_1);
 
         JButton btnNewButton_2 = new JButton("Delete");
@@ -171,6 +197,7 @@ public class ManageMenuItemUI {
                     itemPrice.setText("");
                     itemQuantity.setText("");
                     comboBox.setSelectedIndex(0);
+                    itemImage.setText("");
 
                 }
                 else {
@@ -178,11 +205,11 @@ public class ManageMenuItemUI {
                 }
             }
         });
-        btnNewButton_2.setBounds(377, 193, 117, 29);
+        btnNewButton_2.setBounds(377, 220, 117, 29);
         frame.getContentPane().add(btnNewButton_2);
 
         scrollPane = new JScrollPane();
-        scrollPane.setBounds(6, 238, 588, 259);
+        scrollPane.setBounds(6, 258, 588, 259);
         frame.getContentPane().add(scrollPane);
 
         table = new JTable();
@@ -195,11 +222,13 @@ public class ManageMenuItemUI {
                 itemPrice.setText(model.getValueAt(r, 1).toString());
                 comboBox.setSelectedItem(model.getValueAt(r, 2).toString());
                 itemQuantity.setText(model.getValueAt(r, 3).toString());
+                itemImage.setText(model.getValueAt(r, 4).toString());
 
             }
         });
         table.setBackground(new Color(255, 240, 245));
         model = new DefaultTableModel();
+
         model.setColumnIdentifiers(column);
         table.setModel(model);
         scrollPane.setViewportView(table);

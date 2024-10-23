@@ -32,10 +32,10 @@ public class DataAccessFacade implements DataAccess {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public HashMap<Long, MenuItem> readItemsMap() {
+	public HashMap<String, MenuItem> readItemsMap() {
 		//Returns a Map with name/value pairs being
 		//   isbn -> Book
-		return (HashMap<Long, MenuItem>) readFromStorage(StorageType.ITEMS);
+		return (HashMap<String, MenuItem>) readFromStorage(StorageType.ITEMS);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -56,6 +56,16 @@ public class DataAccessFacade implements DataAccess {
 			System.out.println("Order with ID " + orderId + " not found.");
 	}
 
+	public void loadItemMap(MenuItem item) {
+		System.out.println("Here loadItemMap");
+		HashMap<String, MenuItem> items = readItemsMap();
+		if(items == null || items.size() == 0)
+			items = new HashMap<>();
+		String itemId = item.getItemId();
+		items.put(itemId, item);
+		saveToStorage(StorageType.ITEMS, items);
+	}
+
 	@SuppressWarnings("unchecked")
 	public HashMap<String, User> readUserMap() {
 		//Returns a Map with name/value pairs being
@@ -64,7 +74,7 @@ public class DataAccessFacade implements DataAccess {
 	}
 
 	static void loadItemMap(List<MenuItem> itemList) {
-		HashMap<Long, MenuItem> items = new HashMap<Long, MenuItem>();
+		HashMap<String, MenuItem> items = new HashMap<String, MenuItem>();
 		itemList.forEach(item -> items.put(item.getItemId(), item));
 		System.out.println("Save Items: " + itemList.get(0));
 		saveToStorage(StorageType.ITEMS, items);
