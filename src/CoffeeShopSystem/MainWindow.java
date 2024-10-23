@@ -61,7 +61,6 @@ public class MainWindow {
         takeOrderBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 TakeOrderWindow bWindow = new TakeOrderWindow();
-                //bframe is a variable property given in design view
                 bWindow.bframe.setVisible(true);
                 mframe.dispose();
             }
