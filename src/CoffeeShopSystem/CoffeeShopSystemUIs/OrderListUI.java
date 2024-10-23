@@ -83,13 +83,13 @@ public class OrderListUI extends JFrame {
     public static void main(String[] args) {
         // Example usage
         Order order1 = new Order();
-        order1.addItem(new MenuItem(1, "Espresso", 2.5, 2, MenuCategory.COFFEE, ""));
-        order1.addItem(new MenuItem(2, "Croissant", 1.5, 1, MenuCategory.DESSERT, ""));
-        order1.addItem(new MenuItem(3, "Orange Juice", 3.0, 1, MenuCategory.BEVERAGE, ""));
+        order1.addItem(new MenuItem("Espresso", 2.5, 2, MenuCategory.COFFEE, ""));
+        order1.addItem(new MenuItem("Croissant", 1.5, 1, MenuCategory.DESSERT, ""));
+        order1.addItem(new MenuItem("Orange Juice", 3.0, 1, MenuCategory.BEVERAGE, ""));
 
         Order order2 = new Order();
-        order2.addItem(new MenuItem(4, "Latte", 3.0, 1, MenuCategory.COFFEE, ""));
-        order2.addItem(new MenuItem(5, "Muffin", 2.0, 2, MenuCategory.DESSERT, ""));
+        order2.addItem(new MenuItem("Latte", 3.0, 1, MenuCategory.COFFEE, ""));
+        order2.addItem(new MenuItem("Muffin", 2.0, 2, MenuCategory.DESSERT, ""));
 
         HashMap<String, Order> orders = new HashMap<>();
         orders.put("ORD001", order1);

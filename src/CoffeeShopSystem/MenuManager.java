@@ -21,7 +21,7 @@ public class MenuManager {
     // Update an existing menu item
     public void updateMenuItem(long itemId, String newItemName, double newPrice, MenuCategory newCategory) {
         for (MenuItem item : menuItems) {
-            if (item.getItemId() == itemId) {
+            if (item.getItemId().equals(itemId)) {
                 item.setItemName(newItemName);
                 item.setPrice(newPrice);
                 System.out.println("Menu item updated: " + item);
@@ -33,7 +33,7 @@ public class MenuManager {
 
     // delete a menu item
     public void removeMenuItem(long itemId) {
-        menuItems.removeIf(item -> item.getItemId() == itemId);
+        menuItems.removeIf(item -> item.getItemId().equals(itemId));
         System.out.println("Menu item with ID removed: " + itemId);
     }
 

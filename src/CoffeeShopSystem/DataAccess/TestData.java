@@ -92,14 +92,14 @@ public class TestData {
 	@SuppressWarnings("serial")
 	List<MenuItem> allItems = new ArrayList<MenuItem>() {
 		{
-			add(new MenuItem(1, "Americano", 12, 0, MenuCategory.COFFEE, "src/CoffeeShopSystem/Images/americano.jpg"));
-			add(new MenuItem(2, "Latte", 10, 90, MenuCategory.COFFEE, "src/CoffeeShopSystem/Images/Latte.jpg"));
-			add(new MenuItem(3, "Red velvet cake", 20, 80, MenuCategory.DESSERT, "src/CoffeeShopSystem/Images/redVelvet.jpg"));
-			add(new MenuItem(4, "Cheese cake", 22,66, MenuCategory.DESSERT, "src/CoffeeShopSystem/Images/cheeseCake.jpeg"));
-			add(new MenuItem(5, "Orange tea", 12, 100, MenuCategory.BEVERAGE, "src/CoffeeShopSystem/Images/orangeTea.jpg"));
-			add(new MenuItem(6, "Latte", 10, 90, MenuCategory.COFFEE, "src/CoffeeShopSystem/Images/Latte.jpg"));
-			add(new MenuItem(7, "Red velvet cake", 20, 80, MenuCategory.DESSERT, "src/CoffeeShopSystem/Images/redVelvet.jpg"));
-			add(new MenuItem(8, "Cheese cake", 22,66, MenuCategory.DESSERT, ""));
+			add(new MenuItem("Americano", 12, 0, MenuCategory.COFFEE, "src/CoffeeShopSystem/Images/americano.jpg"));
+			add(new MenuItem("Latte", 10, 90, MenuCategory.COFFEE, "src/CoffeeShopSystem/Images/Latte.jpg"));
+			add(new MenuItem("Red velvet cake", 20, 80, MenuCategory.DESSERT, "src/CoffeeShopSystem/Images/redVelvet.jpg"));
+			add(new MenuItem("Cheese cake", 22,66, MenuCategory.DESSERT, "src/CoffeeShopSystem/Images/cheeseCake.jpeg"));
+			add(new MenuItem("Orange tea", 12, 100, MenuCategory.BEVERAGE, "src/CoffeeShopSystem/Images/orangeTea.jpg"));
+			add(new MenuItem("Latte", 10, 90, MenuCategory.COFFEE, "src/CoffeeShopSystem/Images/Latte.jpg"));
+			add(new MenuItem("Red velvet cake", 20, 80, MenuCategory.DESSERT, "src/CoffeeShopSystem/Images/redVelvet.jpg"));
+			add(new MenuItem("Cheese cake", 22,66, MenuCategory.DESSERT, ""));
 		}
 	};
 

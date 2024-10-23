@@ -1,11 +1,13 @@
 package CoffeeShopSystem;
 
 import java.io.Serializable;
+import java.util.UUID;
+
 import CoffeeShopSystem.CoffeeShopSystemEnums.MenuCategory;
 
 // MenuItem Class
 public class MenuItem implements Serializable {
-    private long itemId;
+    private String itemId;
     private String itemName;
     private double price;
     private int quantity;
@@ -15,8 +17,8 @@ public class MenuItem implements Serializable {
 
     private int selectedQty;
 
-    public MenuItem(long itemId, String itemName, double price, int quantity, MenuCategory category, String imagePath) {
-        this.itemId = itemId;
+    public MenuItem(String itemName, double price, int quantity, MenuCategory category, String imagePath) {
+        this.itemId = UUID.randomUUID().toString();
         this.itemName = itemName;
         this.price = price;
         this.quantity = quantity;
@@ -26,7 +28,7 @@ public class MenuItem implements Serializable {
 
     // Getters and Setters
 
-    public long getItemId() {
+    public String getItemId() {
         return itemId;
     }
 
