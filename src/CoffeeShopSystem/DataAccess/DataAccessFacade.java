@@ -12,10 +12,6 @@ import CoffeeShopSystem.MenuItem;
 import CoffeeShopSystem.Order;
 
 public class DataAccessFacade implements DataAccess {
-	@Override
-	public HashMap<String, User> readUserMap() {
-		return null;
-	}
 
 	enum StorageType {
 		ITEMS, EMPLOYEES, ORDERS;
@@ -39,7 +35,7 @@ public class DataAccessFacade implements DataAccess {
 	public HashMap<Long, MenuItem> readItemsMap() {
 		//Returns a Map with name/value pairs being
 		//   isbn -> Book
-		return (HashMap<Long,MenuItem>) readFromStorage(StorageType.ITEMS);
+		return (HashMap<Long, MenuItem>) readFromStorage(StorageType.ITEMS);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -60,14 +56,12 @@ public class DataAccessFacade implements DataAccess {
 			System.out.println("Order with ID " + orderId + " not found.");
 	}
 
-//
-//
-//	@SuppressWarnings("unchecked")
-//	public HashMap<String, User> readUserMap() {
-//		//Returns a Map with name/value pairs being
-//		//   userId -> User
-//		return (HashMap<String, User>)readFromStorage(StorageType.USERS);
-//	}
+	@SuppressWarnings("unchecked")
+	public HashMap<String, User> readUserMap() {
+		//Returns a Map with name/value pairs being
+		//   userId -> User
+		return (HashMap<String, User>)readFromStorage(StorageType.EMPLOYEES);
+	}
 
 	static void loadItemMap(List<MenuItem> itemList) {
 		HashMap<Long, MenuItem> items = new HashMap<Long, MenuItem>();

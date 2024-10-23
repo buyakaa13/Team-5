@@ -1,5 +1,7 @@
 package CoffeeShopSystem;
 
+import CoffeeShopSystem.CoffeeShopSystemEnums.PaymentType;
+
 import java.util.UUID;
 
 public class Payment {

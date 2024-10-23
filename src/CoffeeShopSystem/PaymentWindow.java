@@ -1,5 +1,6 @@
 package CoffeeShopSystem;
 
+import CoffeeShopSystem.CoffeeShopSystemEnums.PaymentType;
 import CoffeeShopSystem.TakeOrder.View.TakeOrderWindow;
 
 import javax.swing.*;

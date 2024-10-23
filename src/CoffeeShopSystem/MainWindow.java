@@ -88,7 +88,7 @@ public class MainWindow {
             }
         });
 
-        JButton viewOrderBtn = new JButton("View All Orders");
+        JButton viewOrderBtn = new JButton("Generate Report");
         viewOrderBtn.setBounds(300, 220, 117, 100);
 
         viewOrderBtn.addActionListener(new ActionListener() {

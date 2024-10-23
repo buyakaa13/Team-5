@@ -280,8 +280,8 @@ public class TakeOrderWindow {
             String category = model.getValueAt(i, 2).toString();
             double itemPrice = Double.parseDouble(model.getValueAt(i, 3).toString());
             int itemQty = Integer.parseInt(model.getValueAt(i, 4).toString());
-            MenuItem menuItem = new MenuItem(itemId, itemName, itemPrice, itemQty, MenuCategory.valueOf(category), "");
-            order.addItem(menuItem);
+            MenuItem MenuItem = new MenuItem(itemId, itemName, itemPrice, itemQty, MenuCategory.valueOf(category), "");
+            order.addItem(MenuItem);
         }
         order.setTotalAmount(totalAmount);
         dataAccess.saveNewOrder(order);

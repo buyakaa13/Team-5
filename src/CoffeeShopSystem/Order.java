@@ -51,6 +51,10 @@ public class Order implements Serializable {
         return orderId;
     }
 
+    public LocalDate getOrderDate() {
+        return orderDate;
+    }
+
     @Override
     public String toString() {
         return "Order ID: " + orderId + ", Items: " + items;
