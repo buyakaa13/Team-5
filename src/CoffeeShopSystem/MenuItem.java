@@ -1,6 +1,7 @@
 package CoffeeShopSystem;
 
 import java.io.Serializable;
+import CoffeeShopSystem.CoffeeShopSystemEnums.MenuCategory;
 
 // MenuItem Class
 public class MenuItem implements Serializable {

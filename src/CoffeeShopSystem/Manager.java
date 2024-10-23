@@ -1,8 +1,10 @@
 package CoffeeShopSystem;
 
+import CoffeeShopSystem.CoffeeShopSystemEnums.EmployeeRole;
+
 public class Manager extends Employee {
-    public Manager(String employeeId, String firstName, String lastName, String username) {
-        super(employeeId, firstName, lastName, username, EmployeeRole.MANAGER);
+    public Manager(String employeeId, String firstName, String lastName, String password, String username) {
+        super(employeeId, firstName, lastName, username, password, EmployeeRole.MANAGER);
     }
 
     @Override
@@ -33,5 +35,9 @@ public class Manager extends Employee {
 
     public void deleteItem (MenuManager menuManager, long itemId) {
         menuManager.removeMenuItem(itemId);
+    }
+
+    public void addNewItem (MenuManager menuManager, MenuItem item) {
+        menuManager.addMenuItem(item);
     }
 }

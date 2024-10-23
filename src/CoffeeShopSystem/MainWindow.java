@@ -1,15 +1,22 @@
 package CoffeeShopSystem;
 
+import CoffeeShopSystem.CoffeeShopSystemUIs.ManageEmployeeUI;
+import CoffeeShopSystem.CoffeeShopSystemUIs.ManageMenuItemUI;
+import CoffeeShopSystem.CoffeeShopSystemUIs.OrderListUI;
+import CoffeeShopSystem.DataAccess.DataAccess;
+import CoffeeShopSystem.DataAccess.DataAccessFacade;
 import CoffeeShopSystem.TakeOrder.View.TakeOrderWindow;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
 
 public class MainWindow {
 
-    JFrame mframe;
+    public JFrame mframe;
+    private DataAccess da;
 
     /**
      * Launch the application.
@@ -33,6 +40,7 @@ public class MainWindow {
      */
     public MainWindow() {
         initialize();
+        da = new DataAccessFacade();
     }
 
     /**
@@ -64,10 +72,35 @@ public class MainWindow {
 
         JButton addMenuBtn = new JButton("Manage Menu");
         addMenuBtn.setBounds(300, 101, 117, 100);
+        addMenuBtn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                ManageMenuItemUI menuWindow = new ManageMenuItemUI();
+                menuWindow.frame.setVisible(true);
+                mframe.dispose();
+            }
+        });
+
         JButton addEmployeeBtn = new JButton("Manage Employee");
         addEmployeeBtn.setBounds(136, 220, 117, 100);
+        addEmployeeBtn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                ManageEmployeeUI menuWindow = new ManageEmployeeUI();
+                menuWindow.frame.setVisible(true);
+                mframe.dispose();
+            }
+        });
+
         JButton viewOrderBtn = new JButton("View All Orders");
         viewOrderBtn.setBounds(300, 220, 117, 100);
+
+        viewOrderBtn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                OrderListUI menuWindow = new OrderListUI(da.readOrderMap());
+                menuWindow.setVisible(true);
+                mframe.dispose();
+            }
+        });
+
         JButton logOutBtn = new JButton("Log Out");
         logOutBtn.setBounds(136, 350, 117, 100);
         panel.add(takeOrderBtn);

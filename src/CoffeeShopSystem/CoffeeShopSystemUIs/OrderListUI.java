@@ -1,0 +1,94 @@
+package CoffeeShopSystem.CoffeeShopSystemUIs;
+
+import CoffeeShopSystem.CoffeeShopSystemEnums.MenuCategory;
+import CoffeeShopSystem.MenuItem;
+import CoffeeShopSystem.Order;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.awt.*;
+import java.util.HashMap;
+import java.util.List;
+
+public class OrderListUI extends JFrame {
+
+    public OrderListUI(HashMap<String, Order> orders) {
+
+        setTitle("Order List");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(600, 400);
+        setLocationRelativeTo(null);
+
+        JPanel panel = new JPanel(new BorderLayout());
+
+        // Create table for the orders
+        String[] columnNames = {"Order ID", "Item(s)", "Total Amount", "Status"};
+        DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0);
+
+        // Loop through orders and populate the table
+        for (String key : orders.keySet()) {
+            boolean firstRow = true; // Track whether it's the first row for this order
+            Order order = orders.get(key);
+            for (CoffeeShopSystem.MenuItem item : order.getItems()) {
+                if (firstRow) {
+                    // Add a row for the first item in the order with all columns populated
+                    tableModel.addRow(new Object[]{
+                            order.getOrderId(),
+                            item.getItemName() + " - " + item.getQuantity() + " pcs, $" + item.getPrice() + " each",
+                            "$" + order.getTotalAmount(),
+                            order.getStatus()
+                    });
+                    firstRow = false; // Subsequent rows for this order won't include Order ID, Total, and Status
+                } else {
+                    // Add a row for the next item with only the item data
+                    tableModel.addRow(new Object[]{
+                            "", // Leave order ID empty for subsequent rows
+                            item.getItemName() + " - " + item.getQuantity() + " pcs, $" + item.getPrice() + " each",
+                            "", // Leave total amount empty for subsequent rows
+                            ""  // Leave status empty for subsequent rows
+                    });
+                }
+            }
+        }
+
+        JTable table = new JTable(tableModel) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // Make the cells non-editable
+            }
+        };
+
+        JScrollPane scrollPane = new JScrollPane(table);
+
+        panel.add(scrollPane, BorderLayout.CENTER);
+
+        JButton backButton = new JButton("Back");
+        backButton.addActionListener(e -> dispose()); // Close the current window
+
+
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.add(backButton);
+
+        panel.add(buttonPanel, BorderLayout.SOUTH);
+
+        add(panel);
+
+        setVisible(true);
+    }
+
+    public static void main(String[] args) {
+        // test the table
+        Order order1 = new Order();
+        order1.addItem(new CoffeeShopSystem.MenuItem(1, "Espresso", 2.5, 2, MenuCategory.COFFEE, ""));
+        order1.addItem(new CoffeeShopSystem.MenuItem(2, "Croissant", 1.5, 1, MenuCategory.DESSERT, ""));
+        order1.addItem(new CoffeeShopSystem.MenuItem(3, "Orange Juice", 3.0, 1, MenuCategory.BEVERAGE, ""));
+
+        Order order2 = new Order();
+        order2.addItem(new CoffeeShopSystem.MenuItem(4, "Latte", 3.0, 1, MenuCategory.COFFEE, ""));
+        order2.addItem(new MenuItem(5, "Muffin", 2.0, 2, MenuCategory.DESSERT, ""));
+
+        List<Order> orders = List.of(order1, order2);
+
+//        SwingUtilities.invokeLater(() -> new OrderListUI(orders));
+    }
+}

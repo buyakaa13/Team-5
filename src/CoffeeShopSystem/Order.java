@@ -2,6 +2,7 @@ package CoffeeShopSystem;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import CoffeeShopSystem.CoffeeShopSystemEnums.OrderStatus;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -9,15 +10,11 @@ import java.util.UUID;
 public class Order implements Serializable {
     private String orderId;
     private LocalDate orderDate;
+    private OrderStatus status;
     private List<MenuItem> items;
     private Employee employee;
-    private OrderStatus status;
     private double totalAmount;
     private List<Payment> paymentList;
-
-    public String getOrderId() {
-        return orderId;
-    }
 
     public Order() {
         this.orderId = UUID.randomUUID().toString();
@@ -31,6 +28,26 @@ public class Order implements Serializable {
 
     public List<MenuItem> getItems() {
         return items;
+    }
+
+    public double getTotalAmount() {
+        double total = 0;
+        for (MenuItem item : items) {
+            total += item.getPrice() * item.getQuantity();
+        }
+        return total;
+    }
+
+    public OrderStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(OrderStatus status) {
+        this.status = status;
+    }
+
+    public String getOrderId() {
+        return orderId;
     }
 
     @Override

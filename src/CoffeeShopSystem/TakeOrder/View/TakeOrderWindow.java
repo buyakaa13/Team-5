@@ -1,6 +1,7 @@
 package CoffeeShopSystem.TakeOrder.View;
 
 import CoffeeShopSystem.*;
+import CoffeeShopSystem.CoffeeShopSystemEnums.MenuCategory;
 import CoffeeShopSystem.DataAccess.DataAccess;
 import CoffeeShopSystem.DataAccess.DataAccessFacade;
 import CoffeeShopSystem.DataAccess.TestData;

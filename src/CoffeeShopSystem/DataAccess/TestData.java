@@ -1,6 +1,6 @@
 package CoffeeShopSystem.DataAccess;
 
-import CoffeeShopSystem.MenuCategory;
+import CoffeeShopSystem.CoffeeShopSystemEnums.MenuCategory;
 import CoffeeShopSystem.MenuItem;
 import CoffeeShopSystem.Order;
 
