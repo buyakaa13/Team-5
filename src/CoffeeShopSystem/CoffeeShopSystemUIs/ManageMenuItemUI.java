@@ -129,7 +129,7 @@ public class ManageMenuItemUI {
         btnNewButton.setBackground(new Color(0, 255, 0));
         btnNewButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if(itemName.getText().equals("")||itemPrice.getText().equals("")||itemQuantity.getText().equals("") || comboBox.getSelectedItem().equals("Please select a category") || itemImage.getText().equals("")) {
+                if(itemName.getText().equals("")||itemPrice.getText().equals("")||itemQuantity.getText().equals("") || comboBox.getSelectedItem().equals("Please select a category")) {
                     JOptionPane.showMessageDialog(null, "Please enter all input fields");
                 }
                 else {
@@ -269,7 +269,7 @@ public class ManageMenuItemUI {
                     currentItem.getPrice(),
                     currentItem.getCategory(),
                     currentItem.getQuantity(),
-                    currentItem.getImagePath()
+                    currentItem.getImagePath() == null ? "No image added" : currentItem.getImagePath().equals("") ? "No image added" : currentItem.getImagePath()
             };
             model.addRow(rowData);
         }
