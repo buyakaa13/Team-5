@@ -261,15 +261,15 @@ public class ManageMenuItemUI {
 
         model.setRowCount(0);
 
-        for (Map.Entry<String, MenuItem> entry : userMap.entrySet()) {
-            MenuItem user = entry.getValue();
+        for (String key : userMap.keySet()) {
+            MenuItem currentItem = userMap.get(key);
             Object[] rowData = {
-                    user.getItemId(),
-                    user.getItemName(),
-                    user.getPrice(),
-                    user.getCategory(),
-                    user.getQuantity(),
-                    user.getImagePath()
+                    currentItem.getItemId(),
+                    currentItem.getItemName(),
+                    currentItem.getPrice(),
+                    currentItem.getCategory(),
+                    currentItem.getQuantity(),
+                    currentItem.getImagePath()
             };
             model.addRow(rowData);
         }
