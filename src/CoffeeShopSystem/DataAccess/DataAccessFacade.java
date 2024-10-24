@@ -56,6 +56,16 @@ public class DataAccessFacade implements DataAccess {
 			System.out.println("Order with ID " + orderId + " not found.");
 	}
 
+	public void updateItemInMap(String itemId, MenuItem updatedItem) {
+		HashMap<String, MenuItem> itemMap = readItemsMap();
+		if (itemMap.containsKey(itemId)) {
+			itemMap.put(itemId, updatedItem);
+			saveToStorage(StorageType.ITEMS, itemMap);
+		}
+		else
+			System.out.println("Item with ID " + itemId + " not found.");
+	}
+
 	public void loadItemMap(MenuItem item) {
 		System.out.println("Here loadItemMap");
 		HashMap<String, MenuItem> items = readItemsMap();

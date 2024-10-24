@@ -13,6 +13,7 @@ import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.HashMap;
+import java.util.Map;
 
 import CoffeeShopSystem.DataAccess.DataAccess;
 import CoffeeShopSystem.DataAccess.DataAccessFacade;
@@ -168,6 +169,8 @@ public class ManageMenuItemUI {
                     model.setValueAt(comboBox.getSelectedItem().toString(), r, 2);
                     model.setValueAt(itemQuantity.getText(), r, 3);
                     model.setValueAt(itemImage.getText(), r, 4);
+
+//                    dataAccess.updateItemInMap(item.getItemId(), item);
                     JOptionPane.showMessageDialog(null, "Item updated Successfully");
                     itemName.setText("");
                     itemPrice.setText("");
@@ -212,8 +215,11 @@ public class ManageMenuItemUI {
         scrollPane.setBounds(6, 258, 588, 259);
         frame.getContentPane().add(scrollPane);
 
-        table = new JTable();
-
+        model = new DefaultTableModel();
+        model.setColumnIdentifiers(column);
+        table = new JTable(model);
+        scrollPane.setViewportView(table);
+        table.setBackground(new Color(255, 240, 245));
         table.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -226,12 +232,7 @@ public class ManageMenuItemUI {
 
             }
         });
-        table.setBackground(new Color(255, 240, 245));
-        model = new DefaultTableModel();
-
-        model.setColumnIdentifiers(column);
-        table.setModel(model);
-        scrollPane.setViewportView(table);
+        displayUserData();
 
         JToggleButton tglbtnNewToggleButton = new JToggleButton("Go back");
         tglbtnNewToggleButton.setOpaque(true);
@@ -247,5 +248,26 @@ public class ManageMenuItemUI {
         });
         tglbtnNewToggleButton.setForeground(new Color(87, 131, 219));
         frame.getContentPane().add(tglbtnNewToggleButton);
+    }
+
+    public void displayUserData() {
+        // Fetch the user map
+        HashMap<String, MenuItem> userMap = dataAccess.readItemsMap();
+
+        // Clear any existing rows in the model
+        model.setRowCount(0);
+
+        // Iterate through the user map and add each user to the table model
+        for (Map.Entry<String, MenuItem> entry : userMap.entrySet()) {
+            MenuItem user = entry.getValue();
+            Object[] rowData = {
+                    user.getItemName(),
+                    user.getPrice(),
+                    user.getCategory(),
+                    user.getQuantity(),
+                    user.getImagePath()
+            };
+            model.addRow(rowData);
+        }
     }
 }

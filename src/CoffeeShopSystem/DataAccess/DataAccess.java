@@ -11,5 +11,6 @@ public interface DataAccess {
 	public HashMap<String, Order> readOrderMap();
 	public void saveNewOrder(Order order);
 	public void updateOrderInMap(String orderId, Order updatedOrder);
+	public void updateItemInMap(String itemId, MenuItem updatedItem);
 	public void loadItemMap(MenuItem item);
 }
