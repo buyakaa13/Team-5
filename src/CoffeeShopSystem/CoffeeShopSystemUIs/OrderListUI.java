@@ -26,7 +26,7 @@ public class OrderListUI extends JFrame {
             JLabel noOrdersLabel = new JLabel("No report available.", SwingConstants.CENTER);
             panel.add(noOrdersLabel, BorderLayout.CENTER);
         } else {
-            String[] columnNames = {"Order ID", "Item(s)", "Total Amount", "Status"};
+            String[] columnNames = {"Date", "ID", "Item Name", "Item Price", "Item Quantity", "Total Amount", "Status"};
             DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0);
 
             // Loop through orders and populate the table
@@ -38,7 +38,9 @@ public class OrderListUI extends JFrame {
                         tableModel.addRow(new Object[]{
                                 order.getOrderDate(),
                                 order.getOrderId(),
-                                item.getItemName() + " - " + item.getQuantity() + " pcs, $" + item.getPrice() + " each",
+                                item.getItemName(),
+                                item.getPrice(),
+                                item.getQuantity(),
                                 "$" + order.getTotalAmount(),
                                 order.getStatus()
                         });
@@ -46,7 +48,10 @@ public class OrderListUI extends JFrame {
                     } else {
                         tableModel.addRow(new Object[]{
                                 "",
-                                item.getItemName() + " - " + item.getQuantity() + " pcs, $" + item.getPrice() + " each",
+                                "",
+                                item.getItemName(),
+                                "",
+                                "",
                                 "",
                                 ""
                         });
