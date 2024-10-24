@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.AbstractDocument;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -18,6 +19,7 @@ import java.util.Map;
 import CoffeeShopSystem.DataAccess.DataAccess;
 import CoffeeShopSystem.DataAccess.DataAccessFacade;
 import CoffeeShopSystem.MenuItem;
+import CoffeeShopSystem.NumericDocumentFilter;
 
 public class ManageMenuItemUI {
 
@@ -83,6 +85,7 @@ public class ManageMenuItemUI {
 
         itemPrice = new JTextField();
         itemPrice.setBounds(216, 65, 254, 33);
+        ((AbstractDocument) itemPrice.getDocument()).setDocumentFilter(new NumericDocumentFilter());
         frame.getContentPane().add(itemPrice);
         itemPrice.setColumns(10);
 
@@ -113,6 +116,7 @@ public class ManageMenuItemUI {
 
         itemQuantity = new JTextField();
         itemQuantity.setBounds(216, 138, 254, 33);
+        ((AbstractDocument) itemQuantity.getDocument()).setDocumentFilter(new NumericDocumentFilter());
         frame.getContentPane().add(itemQuantity);
         itemQuantity.setColumns(10);
 
@@ -261,15 +265,15 @@ public class ManageMenuItemUI {
 
         model.setRowCount(0);
 
-        for (Map.Entry<String, MenuItem> entry : userMap.entrySet()) {
-            MenuItem user = entry.getValue();
+        for (String key : userMap.keySet()) {
+            MenuItem currentItem = userMap.get(key);
             Object[] rowData = {
-                    user.getItemId(),
-                    user.getItemName(),
-                    user.getPrice(),
-                    user.getCategory(),
-                    user.getQuantity(),
-                    user.getImagePath()
+                    currentItem.getItemId(),
+                    currentItem.getItemName(),
+                    currentItem.getPrice(),
+                    currentItem.getCategory(),
+                    currentItem.getQuantity(),
+                    currentItem.getImagePath()
             };
             model.addRow(rowData);
         }
