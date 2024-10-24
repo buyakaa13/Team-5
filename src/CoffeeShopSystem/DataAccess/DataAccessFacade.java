@@ -1,4 +1,6 @@
 package CoffeeShopSystem.DataAccess;
+
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -7,7 +9,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.List;
-
 import CoffeeShopSystem.MenuItem;
 import CoffeeShopSystem.Order;
 
@@ -26,22 +27,34 @@ public class DataAccessFacade implements DataAccess {
 	public void saveNewOrder(Order order) {
 		// Read all the orders from storage
 		HashMap<String, Order> orders = readOrderMap();
+		if(orders == null || orders.size() == 0)
+			orders = new HashMap<>();
 		String orderId = order.getOrderId();
 		orders.put(orderId, order);
 		saveToStorage(StorageType.ORDERS, orders);
+	}
+
+	public void saveNewUser(User user) {
+		// Read all the orders from storage
+		HashMap<String, User> users = readUserMap();
+		if(users == null || users.size() == 0)
+			users = new HashMap<>();
+		String userId = user.getId();
+		users.put(userId, user);
+		saveToStorage(StorageType.EMPLOYEES, users);
 	}
 	
 	@SuppressWarnings("unchecked")
 	public HashMap<String, MenuItem> readItemsMap() {
 		//Returns a Map with name/value pairs being
-		//   isbn -> Book
-		return (HashMap<String, MenuItem>) readFromStorage(StorageType.ITEMS);
+		//   itemId -> MenuItem
+		return readFromStorage(StorageType.ITEMS) == null ? new HashMap<String, MenuItem>() : (HashMap<String, MenuItem>)readFromStorage(StorageType.ITEMS);
 	}
 
 	@SuppressWarnings("unchecked")
 	public HashMap<String, Order> readOrderMap() {
 		//Returns a Map with name/value pairs being
-		//   memberId -> LibraryMember
+		//   orderId -> Order
 		return (HashMap<String, Order>) readFromStorage(
 				StorageType.ORDERS);
 	}
@@ -57,7 +70,6 @@ public class DataAccessFacade implements DataAccess {
 	}
 
 	public void loadItemMap(MenuItem item) {
-		System.out.println("Here loadItemMap");
 		HashMap<String, MenuItem> items = readItemsMap();
 		if(items == null || items.size() == 0)
 			items = new HashMap<>();
@@ -76,7 +88,6 @@ public class DataAccessFacade implements DataAccess {
 	static void loadItemMap(List<MenuItem> itemList) {
 		HashMap<String, MenuItem> items = new HashMap<String, MenuItem>();
 		itemList.forEach(item -> items.put(item.getItemId(), item));
-		System.out.println("Save Items: " + itemList.get(0));
 		saveToStorage(StorageType.ITEMS, items);
 	}
 
@@ -108,21 +119,29 @@ public class DataAccessFacade implements DataAccess {
 			}
 		}
 	}
-	
+
 	static Object readFromStorage(StorageType type) {
 		ObjectInputStream in = null;
 		Object retVal = null;
 		try {
 			Path path = FileSystems.getDefault().getPath(OUTPUT_DIR, type.toString());
-			in = new ObjectInputStream(Files.newInputStream(path));
-			retVal = in.readObject();
-		} catch(Exception e) {
+			if (Files.exists(path) && Files.size(path) > 0) {
+				in = new ObjectInputStream(Files.newInputStream(path));
+				retVal = in.readObject();
+			} else {
+				System.out.println("File is empty or does not exist.");
+			}
+		} catch (EOFException e) {
+			System.out.println("Reached end of file unexpectedly: " + e.getMessage());
+		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			if(in != null) {
+			if (in != null) {
 				try {
 					in.close();
-				} catch(Exception e) {}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 		}
 		return retVal;

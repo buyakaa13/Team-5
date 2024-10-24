@@ -1,12 +1,11 @@
 package CoffeeShopSystem;
 
+import CoffeeShopSystem.DataAccess.*;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.HashMap;
 
 public class LoginForm extends JFrame {
@@ -14,8 +13,7 @@ public class LoginForm extends JFrame {
     private JPasswordField passwordField;
     private JButton loginButton;
     private JLabel statusLabel;
-    private static final String CREDENTIALS_FILE = "user_credentials.txt";
-
+    private DataAccess dataAccess = new DataAccessFacade();
     public LoginForm() {
         setTitle("Login Form");
         setSize(400, 250);
@@ -65,7 +63,7 @@ public class LoginForm extends JFrame {
                 statusLabel.setText("Login successful!");
                 MainWindow window = new MainWindow();
                 window.mframe.setVisible(true);
-
+                dispose();
 //                JOptionPane.showMessageDialog(null, "Welcome " + username + "!");
             } else {
                 statusLabel.setText("Invalid username or password.");
@@ -75,55 +73,21 @@ public class LoginForm extends JFrame {
     }
 
     private boolean validateCredentials(String username, String password) {
-        HashMap<String, String> credentials = loadCredentialsFromFile();
-        return credentials.containsKey(username) && credentials.get(username).equals(password);
-    }
-
-    private HashMap<String, String> loadCredentialsFromFile() {
-        HashMap<String, String> credentials = new HashMap<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(CREDENTIALS_FILE))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                String[] parts = line.split(":", 2);
-                if (parts.length >= 2) {
-                    String username = parts[0];
-                    String password = parts[1];
-                    credentials.put(username, password);
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return credentials;
-    }
-
-    private void saveCredentialToFile(String username, String password) {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(CREDENTIALS_FILE, true))) {
-            bw.write(username + ":" + password);
-            bw.newLine();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        HashMap<String, User> users = dataAccess.readUserMap();
+        if(users == null || users.size() == 0)
+            return false;
+        boolean isSuccess = users.containsKey(username) && users.get(username).getPassword().equals(password);
+        if(isSuccess)
+            Util.userRole = users.get(username).getAuthorization();
+        return isSuccess;
     }
 
     public static void main(String[] args) {
-        createDefaultCredentials();
+        TestData testData = new TestData();
+        testData.userData();
         SwingUtilities.invokeLater(() -> {
             new LoginForm();
         });
     }
 
-    // Create default credentials if the file doesn't exist
-    private static void createDefaultCredentials() {
-        if (!Files.exists(Paths.get(CREDENTIALS_FILE))) {
-            try (BufferedWriter bw = new BufferedWriter(new FileWriter(CREDENTIALS_FILE))) {
-                bw.write("admin:admin123");  // Default admin credentials
-                bw.newLine();
-                bw.write("cashier:cashier123");   // Default user credentials
-                bw.newLine();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
 }

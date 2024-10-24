@@ -1,12 +1,10 @@
-package CoffeeShopSystem.TakeOrder.View;
+package CoffeeShopSystem;
 
-import CoffeeShopSystem.*;
 import CoffeeShopSystem.CoffeeShopSystemEnums.MenuCategory;
 import CoffeeShopSystem.CoffeeShopSystemEnums.OrderStatus;
 import CoffeeShopSystem.DataAccess.DataAccess;
 import CoffeeShopSystem.DataAccess.DataAccessFacade;
 import CoffeeShopSystem.DataAccess.TestData;
-import CoffeeShopSystem.MenuItem;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -25,7 +23,7 @@ public class TakeOrderWindow {
     private JTable orderTable;
     private JScrollPane topScroll, bottomScroll;
     private JPanel mainPanel, topPanel, bottomPanel, manageOrderPanel;
-    private JTextField totalText, paidText, remainText;
+    private JTextField totalText;
     DefaultTableModel model;
     Order order;
     public ArrayList<Payment> paymentList;
@@ -97,82 +95,85 @@ public class TakeOrderWindow {
         mainPanel.add(bottomPanel);
 
         // Fetch item data
-//        TestData td = new TestData();
-//        td.itemData();
+        TestData td = new TestData();
+        td.itemData();
         DataAccess da = new DataAccessFacade();
         HashMap<String, MenuItem> items = da.readItemsMap();
 
         if (items == null || items.isEmpty()) {
             JLabel noOrdersLabel = new JLabel("No items available.", SwingConstants.CENTER);
-            mainPanel.add(noOrdersLabel, BorderLayout.CENTER);}
-            else {
-                for (String key : items.keySet()) {
-                    MenuItem currentItem = items.get(key);
-                    currentItem.setSelectedQty(1);
+            topPanel.add(noOrdersLabel, BorderLayout.CENTER);
+        }
+        else {
+            for (String key : items.keySet()) {
+                MenuItem currentItem = items.get(key);
+                currentItem.setSelectedQty(1);
 
-                    JPanel itemPanel = new JPanel();
-                    itemPanel.setLayout(new BoxLayout(itemPanel, BoxLayout.Y_AXIS));
-                    itemPanel.setPreferredSize(new Dimension(100, 200));
+                JPanel itemPanel = new JPanel();
+                itemPanel.setLayout(new BoxLayout(itemPanel, BoxLayout.Y_AXIS));
+                itemPanel.setPreferredSize(new Dimension(180, 200));
 
-                    JLabel imageLabel = new JLabel();
-                    String imageIcon = "src/CoffeeShopSystem/Images/noImage.png";
-                    if(!currentItem.getImagePath().equals(""))
-                        imageIcon = currentItem.getImagePath();
-                    ImageIcon icon = new ImageIcon(imageIcon);
-                    Image scaledImage = icon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
-                    imageLabel.setIcon(new ImageIcon(scaledImage));
-                    itemPanel.add(imageLabel);
+                JLabel imageLabel = new JLabel();
+                String imageIcon = "src/CoffeeShopSystem/Images/noImage.png";
+                if(!currentItem.getImagePath().equals(""))
+                    imageIcon = currentItem.getImagePath();
+                ImageIcon icon = new ImageIcon(imageIcon);
+                Image scaledImage = icon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+                imageLabel.setIcon(new ImageIcon(scaledImage));
+                itemPanel.add(imageLabel);
 
-                    JLabel nameLabel = new JLabel("Name: " + currentItem.getItemName());
-                    itemPanel.add(nameLabel);
+                JLabel nameLabel = new JLabel("Name: " + currentItem.getItemName());
+                itemPanel.add(nameLabel);
 
-                    JLabel priceLabel = new JLabel("Price: $" + currentItem.getPrice());
-                    itemPanel.add(priceLabel);
+                JLabel priceLabel = new JLabel("Price: $" + currentItem.getPrice());
+                itemPanel.add(priceLabel);
 
-                    JPanel rowPanel = new JPanel(new FlowLayout());
-                    JLabel label = new JLabel("Qty:");
-                    rowPanel.add(label);
+                JPanel rowPanel = new JPanel();
+                rowPanel.setLayout(new BoxLayout(rowPanel, BoxLayout.X_AXIS));
+                rowPanel.setBorder(BorderFactory.createEmptyBorder(0, 70, 0, 0));
+                JLabel label = new JLabel("Qty:");
+                rowPanel.add(label);
 
-                    SpinnerNumberModel spinnerNum = new SpinnerNumberModel(1, 1, currentItem.getQuantity() == 0 ? 1 : currentItem.getQuantity(), 1);
-                    JSpinner spinner = new JSpinner(spinnerNum);
-                    spinner.addChangeListener(new ChangeListener() {
-                        @Override
-                        public void stateChanged(ChangeEvent e) {
-                            currentItem.setSelectedQty(Integer.valueOf(spinner.getValue().toString()));
-                        }
-                    });
-                    rowPanel.add(spinner);
-                    itemPanel.add(rowPanel);
-
-                    JButton addBtn = new JButton("Add item");
-                    itemPanel.add(addBtn);
-
-                    if(currentItem.getQuantity() == 0) {
-                        spinner.setEnabled(false);
-                        addBtn.setEnabled(false);
+                SpinnerNumberModel spinnerNum = new SpinnerNumberModel(1, 1, currentItem.getQuantity() == 0 ? 1 : currentItem.getQuantity(), 1);
+                JSpinner spinner = new JSpinner(spinnerNum);
+                spinner.setAlignmentX(30);
+                spinner.setPreferredSize(new Dimension(60, 25));  // Simple and fixed size
+                spinner.setMaximumSize(new Dimension(60, 25));    // Prevents resizing
+                spinner.addChangeListener(new ChangeListener() {
+                    @Override
+                    public void stateChanged(ChangeEvent e) {
+                        currentItem.setSelectedQty(Integer.valueOf(spinner.getValue().toString()));
                     }
+                });
+                rowPanel.add(spinner);
+                itemPanel.add(rowPanel);
 
-                    addBtn.addActionListener(new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            String[] rowData = new String[6];
-                            rowData[0] = String.valueOf(key);
-                            rowData[1] = currentItem.getItemName();
-                            rowData[2] = currentItem.getCategory().toString();
-                            rowData[3] = String.valueOf(currentItem.getPrice());
-                            rowData[4] = String.valueOf(currentItem.getSelectedQty());
-                            double total = currentItem.getPrice() * currentItem.getSelectedQty();
-                            rowData[5] = String.valueOf(total);
+                JButton addBtn = new JButton("Add item");
+                itemPanel.add(addBtn);
 
-                            model.addRow(rowData);
-                            calculateTotal();
-                        }
-                    });
-                    topPanel.add(itemPanel);
+                if(currentItem.getQuantity() == 0) {
+                    spinner.setEnabled(false);
+                    addBtn.setEnabled(false);
                 }
+                addBtn.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        String[] rowData = new String[6];
+                        rowData[0] = String.valueOf(key);
+                        rowData[1] = currentItem.getItemName();
+                        rowData[2] = currentItem.getCategory().toString();
+                        rowData[3] = String.valueOf(currentItem.getPrice());
+                        rowData[4] = String.valueOf(currentItem.getSelectedQty());
+                        double total = currentItem.getPrice() * currentItem.getSelectedQty();
+                        rowData[5] = String.valueOf(total);
+
+                        model.addRow(rowData);
+                        calculateTotal();
+                    }
+                });
+                topPanel.add(itemPanel);
             }
-
-
+        }
 
         orderTable = new JTable();
         orderTable.setBounds(0, 300, 900, 300);
@@ -204,28 +205,6 @@ public class TakeOrderWindow {
         totalRowPanel.add(totalText);
         bottomPanel.add(totalRowPanel);
 
-        JPanel paidRowPanel = new JPanel(new FlowLayout());
-        JLabel paidLabel = new JLabel();
-        paidLabel.setText("Paid amount: ");
-        paidRowPanel.add(paidLabel);
-
-        paidText = new JTextField("0");
-        paidText.setEditable(false);
-        paidText.setPreferredSize(new Dimension(150, 20));
-        paidRowPanel.add(paidText);
-        bottomPanel.add(paidRowPanel);
-
-        JPanel remainRowPanel = new JPanel(new FlowLayout());
-        JLabel remainLabel = new JLabel();
-        remainLabel.setText("Remain amount: ");
-        remainRowPanel.add(remainLabel);
-
-        remainText = new JTextField("0");
-        remainText.setEditable(false);
-        remainText.setPreferredSize(new Dimension(150, 20));
-        remainRowPanel.add(remainText);
-        bottomPanel.add(remainRowPanel);
-
         JPanel buttonPanel = new JPanel();
         JButton returnBtn = new JButton();
         returnBtn.addActionListener(new ActionListener() {
@@ -237,8 +216,6 @@ public class TakeOrderWindow {
             }
         });
         returnBtn.setText("Go back");
-        returnBtn.setOpaque(true);
-        returnBtn.setBorderPainted(false);
         buttonPanel.add(returnBtn);
 
         JButton paymentBtn = new JButton();
