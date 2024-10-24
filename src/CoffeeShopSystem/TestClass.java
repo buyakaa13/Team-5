@@ -10,9 +10,9 @@ public class TestClass {
         ManageEmployee employeeManager = new ManageEmployee();
 
         // Add manager
-        Manager manager = new Manager("E001", "John", "Doe", "managerOne", "1234");
+        Manager manager = new Manager("E001", "John", "Doe", "1234", "manager");
         // Add cashier
-        Cashier cashier = new Cashier("E002", "Jane", "Smith", "cashierOne", "1234");
+        Cashier cashier = new Cashier("E002", "Jane", "Smith", "cashier", "1234");
 
         employeeManager.addEmployee(manager);
         employeeManager.addEmployee(cashier);

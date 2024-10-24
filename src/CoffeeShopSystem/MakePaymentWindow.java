@@ -1,14 +1,14 @@
 package CoffeeShopSystem;
 
 import CoffeeShopSystem.CoffeeShopSystemEnums.PaymentType;
-import CoffeeShopSystem.TakeOrder.View.TakeOrderWindow;
 
 import javax.swing.*;
+import javax.swing.text.AbstractDocument;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class CashPaymentWindow {
+public class MakePaymentWindow {
     private static TakeOrderWindow takeOrderWindow;
     public JFrame frame;
     private JTextField totalText, payText;
@@ -22,7 +22,7 @@ public class CashPaymentWindow {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    CashPaymentWindow window = new CashPaymentWindow(takeOrderWindow, PaymentType.CASH);
+                    MakePaymentWindow window = new MakePaymentWindow(takeOrderWindow, PaymentType.CASH);
                     window.frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -34,7 +34,7 @@ public class CashPaymentWindow {
     /**
      * Create the application.
      */
-    public CashPaymentWindow(TakeOrderWindow takeOrder, PaymentType type) {
+    public MakePaymentWindow(TakeOrderWindow takeOrder, PaymentType type) {
         takeOrderWindow = takeOrder;
         this.title = type == PaymentType.CASH ? "Cash" : "Card";
         initialize();
@@ -68,6 +68,8 @@ public class CashPaymentWindow {
 
         payText = new JTextField();
         payText.setBounds(197, 76, 130, 26);
+        ((AbstractDocument) payText.getDocument()).setDocumentFilter(new NumericDocumentFilter());
+
         frame.getContentPane().add(payText);
         payText.setColumns(10);
 

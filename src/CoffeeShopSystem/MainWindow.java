@@ -3,9 +3,9 @@ package CoffeeShopSystem;
 import CoffeeShopSystem.CoffeeShopSystemUIs.ManageEmployeeUI;
 import CoffeeShopSystem.CoffeeShopSystemUIs.ManageMenuItemUI;
 import CoffeeShopSystem.CoffeeShopSystemUIs.OrderListUI;
+import CoffeeShopSystem.DataAccess.Auth;
 import CoffeeShopSystem.DataAccess.DataAccess;
 import CoffeeShopSystem.DataAccess.DataAccessFacade;
-import CoffeeShopSystem.TakeOrder.View.TakeOrderWindow;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,7 +13,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class MainWindow {
-
     public JFrame mframe;
     private DataAccess da;
 
@@ -65,10 +64,20 @@ public class MainWindow {
                 mframe.dispose();
             }
         });
-        takeOrderBtn.setBounds(136, 101, 117, 100);
+        takeOrderBtn.setBounds(130, 100, 150, 100);
+
+        JButton viewOrderBtn = new JButton("Generate Report");
+        viewOrderBtn.setBounds(300, 100, 150, 100);
+        viewOrderBtn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                OrderListUI menuWindow = new OrderListUI(da.readOrderMap());
+                menuWindow.setVisible(true);
+                mframe.dispose();
+            }
+        });
 
         JButton addMenuBtn = new JButton("Manage Menu");
-        addMenuBtn.setBounds(300, 101, 117, 100);
+        addMenuBtn.setBounds(130, 220, 150, 100);
         addMenuBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 ManageMenuItemUI menuWindow = new ManageMenuItemUI();
@@ -78,7 +87,7 @@ public class MainWindow {
         });
 
         JButton addEmployeeBtn = new JButton("Manage Employee");
-        addEmployeeBtn.setBounds(136, 220, 117, 100);
+        addEmployeeBtn.setBounds(300, 220, 150, 100);
         addEmployeeBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 ManageEmployeeUI menuWindow = new ManageEmployeeUI();
@@ -87,23 +96,23 @@ public class MainWindow {
             }
         });
 
-        JButton viewOrderBtn = new JButton("Generate Report");
-        viewOrderBtn.setBounds(300, 220, 117, 100);
-
-        viewOrderBtn.addActionListener(new ActionListener() {
+        JButton logOutBtn = new JButton("Log Out");
+        logOutBtn.setBounds(130, 350, 150, 100);
+        logOutBtn.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
-                OrderListUI menuWindow = new OrderListUI(da.readOrderMap());
-                menuWindow.setVisible(true);
+                LoginForm login = new LoginForm();
+                login.setVisible(true);
                 mframe.dispose();
             }
         });
 
-        JButton logOutBtn = new JButton("Log Out");
-        logOutBtn.setBounds(136, 350, 117, 100);
         panel.add(takeOrderBtn);
-        panel.add(addMenuBtn);
-        panel.add(addEmployeeBtn);
         panel.add(viewOrderBtn);
+        if(Util.userRole == Auth.MANAGER){
+            panel.add(addMenuBtn);
+            panel.add(addEmployeeBtn);
+        }
         panel.add(logOutBtn);
     }
 }

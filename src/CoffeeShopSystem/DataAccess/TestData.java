@@ -94,11 +94,11 @@ public class TestData {
 		{
 			add(new MenuItem("Americano", 12, 0, MenuCategory.COFFEE, "src/CoffeeShopSystem/Images/americano.jpg"));
 			add(new MenuItem("Latte", 10, 90, MenuCategory.COFFEE, "src/CoffeeShopSystem/Images/Latte.jpg"));
-			add(new MenuItem("Red velvet cake", 20, 80, MenuCategory.DESSERT, "src/CoffeeShopSystem/Images/redVelvet.jpg"));
+			add(new MenuItem("Red velvet", 20, 80, MenuCategory.DESSERT, "src/CoffeeShopSystem/Images/redVelvet.jpg"));
 			add(new MenuItem("Cheese cake", 22,66, MenuCategory.DESSERT, "src/CoffeeShopSystem/Images/cheeseCake.jpeg"));
 			add(new MenuItem("Orange tea", 12, 100, MenuCategory.BEVERAGE, "src/CoffeeShopSystem/Images/orangeTea.jpg"));
 			add(new MenuItem("Latte", 10, 90, MenuCategory.COFFEE, "src/CoffeeShopSystem/Images/Latte.jpg"));
-			add(new MenuItem("Red velvet cake", 20, 80, MenuCategory.DESSERT, "src/CoffeeShopSystem/Images/redVelvet.jpg"));
+			add(new MenuItem("Red velvet", 20, 80, MenuCategory.DESSERT, "src/CoffeeShopSystem/Images/redVelvet.jpg"));
 			add(new MenuItem("Cheese cake", 22,66, MenuCategory.DESSERT, ""));
 		}
 	};
@@ -106,8 +106,8 @@ public class TestData {
 	@SuppressWarnings("serial")
 	List<User> allUsers = new ArrayList<User>() {
 		{
-			add(new User("101", "xyz", Auth.CASHIER));
-			add(new User("102", "abc", Auth.MANAGER));
+			add(new User("cashier", "123", Auth.CASHIER));
+			add(new User("manager", "1234", Auth.MANAGER));
 			add(new User("103", "111", Auth.BOTH));
 		}
 	};

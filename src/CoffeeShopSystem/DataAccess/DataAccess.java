@@ -10,6 +10,7 @@ public interface DataAccess {
 	public HashMap<String, User> readUserMap();
 	public HashMap<String, Order> readOrderMap();
 	public void saveNewOrder(Order order);
+	public void saveNewUser(User user);
 	public void updateOrderInMap(String orderId, Order updatedOrder);
 	public void updateItemInMap(String itemId, MenuItem updatedItem);
 	public void loadItemMap(MenuItem item);

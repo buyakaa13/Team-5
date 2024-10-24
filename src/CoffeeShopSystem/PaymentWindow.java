@@ -1,7 +1,6 @@
 package CoffeeShopSystem;
 
 import CoffeeShopSystem.CoffeeShopSystemEnums.PaymentType;
-import CoffeeShopSystem.TakeOrder.View.TakeOrderWindow;
 
 import javax.swing.*;
 import java.awt.*;
@@ -64,7 +63,7 @@ public class PaymentWindow {
         cashBtn.setIcon(new ImageIcon(scaledImage));
         cashBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                CashPaymentWindow cash = new CashPaymentWindow(takeOrderWindow, PaymentType.CASH);
+                MakePaymentWindow cash = new MakePaymentWindow(takeOrderWindow, PaymentType.CASH);
                 cash.frame.setVisible(true);
                 pframe.dispose();
             }
@@ -79,7 +78,7 @@ public class PaymentWindow {
         cardBtn.setIcon(new ImageIcon(scaledImageCard));
         cardBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                CashPaymentWindow cash = new CashPaymentWindow(takeOrderWindow, PaymentType.CARD);
+                MakePaymentWindow cash = new MakePaymentWindow(takeOrderWindow, PaymentType.CARD);
                 cash.frame.setVisible(true);
                 pframe.dispose();
             }
