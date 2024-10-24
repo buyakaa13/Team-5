@@ -12,5 +12,6 @@ public interface DataAccess {
 	public void saveNewOrder(Order order);
 	public void saveNewUser(User user);
 	public void updateOrderInMap(String orderId, Order updatedOrder);
+	public void updateItemInMap(String itemId, MenuItem updatedItem);
 	public void loadItemMap(MenuItem item);
 }
